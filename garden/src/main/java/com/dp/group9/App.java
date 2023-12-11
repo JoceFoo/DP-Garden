@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.Random;
@@ -42,7 +44,21 @@ public class App extends Application {
 
         // add Buttons and get+show scene
         root.getChildren().addAll(treeButton, flowerButton, grassButton);
+        
+        stage.setTitle("Garden");
         stage.setScene(scene);
+        stage.setMaxWidth(900);
+        stage.setMaxHeight(720);
+        stage.setResizable(false);
+        stage.centerOnScreen();
+        
+        GardenLayout gardenLayout = GardenLayout.getInstance();
+        gardenLayout.setLayout(new LayoutType("Fourth"), root);
+
+        Image backgroundImage = gardenLayout.getLayoutType().getBackgroundImage().getImage();
+        // stage.setWidth(backgroundImage.getWidth());
+        // stage.setHeight(backgroundImage.getHeight());
+
         stage.show();
     }
 
@@ -96,7 +112,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 
 }
