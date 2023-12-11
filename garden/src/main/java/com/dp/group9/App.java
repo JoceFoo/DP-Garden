@@ -1,28 +1,50 @@
 package com.dp.group9;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.util.Random;
 
 /**
- * JavaFX App
+ * Group 9
+ * Virtual Space: Garden
  */
 public class App extends Application {
-
-    private static Scene scene;
-
     @Override
     public void start(Stage stage) throws IOException {
         Pane root = new Pane();
-        root.setId("pane");
+        Scene scene = new Scene(root, 700, 700);
+
+        // Tree
+        Button treeButton = new Button("Add Tree");
+        treeButton.setLayoutX(10);
+        treeButton.setLayoutY(10);
+
+        treeButton.setOnAction(e -> addTree(root));
+
+        // Flower
+        Button flowerButton = new Button("Add Flower");
+        flowerButton.setLayoutX(treeButton.getLayoutX() + treeButton.getWidth() + 80); // beside the tree button
+        flowerButton.setLayoutY(10);
+
+        flowerButton.setOnAction(e -> addFlower(root));
+
+        // Grass
+        Button grassButton = new Button("Add Grass");
+        grassButton.setLayoutX(flowerButton.getLayoutX() + flowerButton.getWidth() + 90);// beside the flower button
+        grassButton.setLayoutY(10);
+
+        grassButton.setOnAction(e -> addGrass(root));
+
+        // add Buttons and get+show scene
+        root.getChildren().addAll(treeButton, flowerButton, grassButton);
         
-        Scene scene = new Scene(root);
         stage.setTitle("Garden");
         stage.setScene(scene);
         stage.setMaxWidth(900);
@@ -40,13 +62,53 @@ public class App extends Application {
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+    private void addTree(Pane pane) {
+        Random random = new Random();
+
+        Plant plant = new SimplePlant();
+        Tree tree = new Tree(plant, pane);
+        double start = pane.getWidth() / 3;
+        double end = 2 * start;
+
+        double randomX;
+        if (random.nextBoolean()) {
+            randomX = random.nextDouble() * (start - tree.getTreeView().getFitWidth() / 2);
+        } else {
+            randomX = end + random.nextDouble() * (start - tree.getTreeView().getFitWidth() / 2);
+        }
+
+        int minY = 350;
+        int maxY = 400;
+        int randomY = random.nextInt(maxY - minY) + minY;
+
+        tree.getTreeView().setLayoutX(randomX);
+        tree.getTreeView().setLayoutY(randomY);
+
+        tree.display();
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+    private void addFlower(Pane pane) {
+        Random random = new Random();
+
+        Plant plant = new SimplePlant();
+        Flower flower = new Flower(plant, pane);
+
+        flower.getFlowerView().setLayoutX(random.nextDouble() * (pane.getWidth() - flower.getFlowerView().getFitWidth()));
+        flower.getFlowerView().setLayoutY(pane.getHeight() - flower.getFlowerView().getFitHeight());
+
+        flower.display();
+    }
+
+    private void addGrass(Pane pane) {
+        Random random = new Random();
+
+        Plant plant = new SimplePlant();
+        Grass grass = new Grass(plant, pane);
+
+        grass.getGrassView().setLayoutX(random.nextDouble() * (pane.getWidth() - grass.getGrassView().getFitWidth()));
+        grass.getGrassView().setLayoutY(pane.getHeight() - grass.getGrassView().getFitHeight());
+
+        grass.display();
     }
 
     public static void main(String[] args) {
