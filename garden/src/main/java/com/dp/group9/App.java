@@ -3,10 +3,10 @@ package com.dp.group9;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.Random;
@@ -19,11 +19,27 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Pane root = new Pane();
-        Scene scene = new Scene(root, 700, 700);
+        Scene scene = new Scene(root, 600, 750); // maintain 4:5 (width to height) ratio
+        GardenLayout gardenLayout = GardenLayout.getInstance();
+        gardenLayout.setLayout(new LayoutType(), root);
+
+        // Garden Layout
+        MenuButton layoutButton = new MenuButton(gardenLayout.getLayoutType().getLayoutName());
+        layoutButton.setLayoutX(10);
+        layoutButton.setLayoutY(10);
+        layoutButton.setPrefWidth(130);
+        LayoutType.LAYOUT_TYPES.forEach((String key, String value) -> {
+            MenuItem menuItem = new MenuItem(key);
+            menuItem.setOnAction(e -> {
+                gardenLayout.setLayout(new LayoutType(value), root);
+                layoutButton.setText(key);
+            });
+            layoutButton.getItems().add(menuItem);
+        });
 
         // Tree
         Button treeButton = new Button("Add Tree");
-        treeButton.setLayoutX(10);
+        treeButton.setLayoutX(layoutButton.getLayoutX() + layoutButton.getWidth() + 140); // beside the layout button
         treeButton.setLayoutY(10);
 
         treeButton.setOnAction(e -> addTree(root));
@@ -43,22 +59,13 @@ public class App extends Application {
         grassButton.setOnAction(e -> addGrass(root));
 
         // add Buttons and get+show scene
-        root.getChildren().addAll(treeButton, flowerButton, grassButton);
+        root.getChildren().addAll(layoutButton, treeButton, flowerButton, grassButton);
         
         stage.setTitle("Garden");
         stage.setScene(scene);
-        stage.setMaxWidth(900);
-        stage.setMaxHeight(720);
         stage.setResizable(false);
         stage.centerOnScreen();
         
-        GardenLayout gardenLayout = GardenLayout.getInstance();
-        gardenLayout.setLayout(new LayoutType("Fourth"), root);
-
-        Image backgroundImage = gardenLayout.getLayoutType().getBackgroundImage().getImage();
-        // stage.setWidth(backgroundImage.getWidth());
-        // stage.setHeight(backgroundImage.getHeight());
-
         stage.show();
     }
 
