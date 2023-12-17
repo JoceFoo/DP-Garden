@@ -44,7 +44,7 @@ public class App extends Application implements Observer {
     private static final int NUM_DROPS = 100;
     private WeatherData weatherData;
     // Create an instance of WeatherPlant for a specific plant
-    WeatherPlant weatherPlant = new WeatherPlant("Sunflower"); // Change the name as needed
+    WeatherPlant Sunflower = new WeatherPlant("Sunflower"); // Change the name as needed
 
     private List<Droplet> droplets = new ArrayList<>();
     private List<Snowflake> snowflakes = new ArrayList<>();
@@ -139,7 +139,7 @@ public class App extends Application implements Observer {
     public void start(Stage primaryStage) {
         WeatherData weatherData = new WeatherData();
         weatherData.registerObserver(this);
-        weatherData.registerObserver(weatherPlant);
+        weatherData.registerObserver(Sunflower);
         Canvas canvas = new Canvas(WIDTH, HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -255,6 +255,7 @@ public class App extends Application implements Observer {
             isSnowyWeather = weather.equals("Snowy");
             isWindyWeather = weather.equals("Windy");
             isStormyWeather = weather.equals("Stormy");
+            Sunflower.update(weather);
         }
     }
 
