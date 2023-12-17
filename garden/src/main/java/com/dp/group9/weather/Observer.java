@@ -1,5 +1,7 @@
 package com.dp.group9.weather;
 
-public class Observer {
+public interface Observer {
+
+    public void update(String weather);
 
 }
