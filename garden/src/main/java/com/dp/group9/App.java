@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -55,8 +56,23 @@ public class App extends Application {
         Button grassButton = new Button("Add Grass");
         grassButton.setLayoutX(flowerButton.getLayoutX() + flowerButton.getWidth() + 90);// beside the flower button
         grassButton.setLayoutY(10);
-
         grassButton.setOnAction(e -> addGrass(root));
+
+        //facilities
+        double xPosition_slide = 80;
+        double yPosition_slide = 400;
+        Slide slide = new Slide(root, xPosition_slide, yPosition_slide);
+
+        double xPosition_swing = 280;
+        double yPosition_swing = 290;
+        Swing swing = new Swing(root, xPosition_swing, yPosition_swing);
+
+        double xPosition_climb = 420;
+        double yPosition_climb = 520;
+        RopeNetClimbing ropeNetClimbing = new RopeNetClimbing(root, xPosition_climb, yPosition_climb);
+
+        Playground playground = new Playground(Arrays.asList(slide, swing, ropeNetClimbing));
+        playground.display();
 
         // add Buttons and get+show scene
         root.getChildren().addAll(layoutButton, treeButton, flowerButton, grassButton);
