@@ -58,20 +58,39 @@ public class App extends Application {
         grassButton.setLayoutY(10);
         grassButton.setOnAction(e -> addGrass(root));
 
-        //facilities
-        double xPosition_slide = 80;
-        double yPosition_slide = 400;
-        Slide slide = new Slide(root, xPosition_slide, yPosition_slide);
+        //garden facilities
+        // Slide slide = new Slide(root, 80, 400);
+        // Seesaw seesaw = new Seesaw(root, 450, 250);
 
-        double xPosition_swing = 280;
-        double yPosition_swing = 290;
-        Swing swing = new Swing(root, xPosition_swing, yPosition_swing);
+        //hillside facilities
+        Swing swing = new Swing(root, 400, 320);
+        RopeNetClimbing ropeNetClimbing = new RopeNetClimbing(root, 80, 500);
 
-        double xPosition_climb = 420;
-        double yPosition_climb = 520;
-        RopeNetClimbing ropeNetClimbing = new RopeNetClimbing(root, xPosition_climb, yPosition_climb);
+        //off the city facilities
+        // ClimbingWalls climbingWalls = new ClimbingWalls(root, 300, 450);
+        // JungleGym jungleGym = new JungleGym(root, 60, 370);
 
-        Playground playground = new Playground(Arrays.asList(slide, swing, ropeNetClimbing));
+        //mountain facilities
+        // MonkeyBars monkeyBars = new MonkeyBars(root, 70, 450);
+        // RopeBridge ropeBridge = new RopeBridge(root, 350, 300);
+
+        // Playground hillside = new Playground(root);
+        // Swing swing = new Swing(root, 280, 290);
+        // hillside.addFacilities(swing);
+        // RopeNetClimbing ropeNetClimbing = new RopeNetClimbing(root, 420, 520);
+        // hillside.addFacilities(ropeNetClimbing);
+
+        //(playground for off the city)
+        //Playground playground = new Playground(Arrays.asList(climbingWalls, jungleGym));
+
+        //(playground for mountain)
+        // Playground playground = new Playground(Arrays.asList(monkeyBars, ropeBridge));
+
+        //(playground for garden)
+        //Playground playground = new Playground(Arrays.asList(slide, seesaw));
+
+        //(playground for hillside)
+        Playground playground = new Playground(Arrays.asList(swing, ropeNetClimbing));
         playground.display();
 
         // add Buttons and get+show scene

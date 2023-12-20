@@ -1,7 +1,6 @@
 package com.dp.group9;
 
 import java.util.List;
-// import javafx.scene.layout.Pane;
 
 public class Playground implements Facility{
     private List<Facility> facilities;
@@ -10,6 +9,9 @@ public class Playground implements Facility{
         this.facilities = facilities;
     }
 
+    public void addFacilities(Facility facility){
+        facilities.add(facility);
+    }
     public void display(){
         for (Facility facility : facilities) {
             facility.display();

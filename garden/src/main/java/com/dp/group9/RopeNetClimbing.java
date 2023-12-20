@@ -13,8 +13,8 @@ public class RopeNetClimbing implements Facility{
         this.pane = pane;
         Image ropeNetClimbing = new Image(getClass().getResourceAsStream("/RopeNetString.png"));
         ropeNetClimbingView = new ImageView(ropeNetClimbing);
-        ropeNetClimbingView.setFitHeight(170);
-        ropeNetClimbingView.setFitWidth(170);
+        ropeNetClimbingView.setFitHeight(200);
+        ropeNetClimbingView.setFitWidth(200);
 
         ropeNetClimbingView.setLayoutX(x);
         ropeNetClimbingView.setLayoutY(y);
