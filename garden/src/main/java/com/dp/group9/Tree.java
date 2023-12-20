@@ -14,8 +14,8 @@ public class Tree extends PlantDecorator {
 
         Image tree = new Image(getClass().getResourceAsStream("/tree.png"));
         treeView = new ImageView(tree);
-        treeView.setFitHeight(100);
-        treeView.setFitWidth(100);
+        treeView.setFitHeight(450);
+        treeView.setFitWidth(450);
 
         treeView.setLayoutY(pane.getHeight() - treeView.getFitHeight());
     }

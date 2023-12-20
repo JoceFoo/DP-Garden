@@ -79,13 +79,13 @@ public class App extends Application {
 
         double randomX;
         if (random.nextBoolean()) {
-            randomX = random.nextDouble() * (start - tree.getTreeView().getFitWidth() / 2);
+            randomX = random.nextDouble() * (start - tree.getTreeView().getFitWidth()) - start;
         } else {
             randomX = end + random.nextDouble() * (start - tree.getTreeView().getFitWidth() / 2);
         }
 
-        int minY = 350;
-        int maxY = 400;
+        int minY = 150;
+        int maxY = 200;
         int randomY = random.nextInt(maxY - minY) + minY;
 
         tree.getTreeView().setLayoutX(randomX);
