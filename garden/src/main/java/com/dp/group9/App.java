@@ -9,7 +9,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -24,6 +23,9 @@ public class App extends Application {
         GardenLayout gardenLayout = GardenLayout.getInstance();
         gardenLayout.setLayout(new LayoutType(), root);
 
+        // Add Playground
+        addPlayground(gardenLayout.getLayoutType().getLayoutName(), root);
+
         // Garden Layout
         MenuButton layoutButton = new MenuButton(gardenLayout.getLayoutType().getLayoutName());
         layoutButton.setLayoutX(10);
@@ -32,8 +34,10 @@ public class App extends Application {
         LayoutType.LAYOUT_TYPES.forEach((String key, String value) -> {
             MenuItem menuItem = new MenuItem(key);
             menuItem.setOnAction(e -> {
-                gardenLayout.setLayout(new LayoutType(value), root);
+                gardenLayout.setLayout(new LayoutType(key), root);
                 layoutButton.setText(key);
+                root.getChildren().removeIf((node) -> !(node instanceof Button || node instanceof MenuButton));
+                addPlayground(key, root);
             });
             layoutButton.getItems().add(menuItem);
         });
@@ -58,41 +62,6 @@ public class App extends Application {
         grassButton.setLayoutY(10);
         grassButton.setOnAction(e -> addGrass(root));
 
-        //garden facilities
-        // Slide slide = new Slide(root, 80, 400);
-        // Seesaw seesaw = new Seesaw(root, 450, 250);
-
-        //hillside facilities
-        Swing swing = new Swing(root, 400, 320);
-        RopeNetClimbing ropeNetClimbing = new RopeNetClimbing(root, 80, 500);
-
-        //off the city facilities
-        // ClimbingWalls climbingWalls = new ClimbingWalls(root, 300, 450);
-        // JungleGym jungleGym = new JungleGym(root, 60, 370);
-
-        //mountain facilities
-        // MonkeyBars monkeyBars = new MonkeyBars(root, 70, 450);
-        // RopeBridge ropeBridge = new RopeBridge(root, 350, 300);
-
-        // Playground hillside = new Playground(root);
-        // Swing swing = new Swing(root, 280, 290);
-        // hillside.addFacilities(swing);
-        // RopeNetClimbing ropeNetClimbing = new RopeNetClimbing(root, 420, 520);
-        // hillside.addFacilities(ropeNetClimbing);
-
-        //(playground for off the city)
-        //Playground playground = new Playground(Arrays.asList(climbingWalls, jungleGym));
-
-        //(playground for mountain)
-        // Playground playground = new Playground(Arrays.asList(monkeyBars, ropeBridge));
-
-        //(playground for garden)
-        //Playground playground = new Playground(Arrays.asList(slide, seesaw));
-
-        //(playground for hillside)
-        Playground playground = new Playground(Arrays.asList(swing, ropeNetClimbing));
-        playground.display();
-
         // add Buttons and get+show scene
         root.getChildren().addAll(layoutButton, treeButton, flowerButton, grassButton);
         
@@ -102,6 +71,32 @@ public class App extends Application {
         stage.centerOnScreen();
         
         stage.show();
+    }
+
+    private void addPlayground(String layoutType, Pane root) {
+        Playground playground = new Playground();
+        if (layoutType.equals("Garden")) {
+            //garden facilities
+            Slide slide = new Slide(root, 80, 400);
+            Seesaw seesaw = new Seesaw(root, 450, 250);
+            playground.addFacilities(slide, seesaw);
+        } else if (layoutType.equals("Hillside")) {
+            //hillside facilities
+            Swing swing = new Swing(root, 400, 320);
+            RopeNetClimbing ropeNetClimbing = new RopeNetClimbing(root, 80, 500);
+            playground.addFacilities(swing, ropeNetClimbing);
+        } else if (layoutType.equals("Off the city")) {
+            //off the city facilities
+            ClimbingWalls climbingWalls = new ClimbingWalls(root, 300, 450);
+            JungleGym jungleGym = new JungleGym(root, 60, 370);
+            playground.addFacilities(climbingWalls, jungleGym);
+        } else if (layoutType.equals("Mountain view")) {
+            //mountain facilities
+            MonkeyBars monkeyBars = new MonkeyBars(root, 70, 450);
+            RopeBridge ropeBridge = new RopeBridge(root, 350, 300);
+            playground.addFacilities(monkeyBars, ropeBridge);
+        }
+        playground.display();
     }
 
     private void addTree(Pane pane) {

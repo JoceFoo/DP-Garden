@@ -26,13 +26,13 @@ public class LayoutType {
     this.background = loadImage(LAYOUT_TYPES.get(firstKey));
   }
 
-  public LayoutType(String layoutType) {
-    for (String value : LAYOUT_TYPES.values()) {
-      if (value.equals(layoutType)) {
-        this.layoutName = layoutType;
-        this.background = loadImage(layoutType);
+  public LayoutType(String key) {
+    LAYOUT_TYPES.forEach((String k, String v) -> {
+      if (key.equals(k)) {
+        this.layoutName = key;
+        this.background = loadImage(v);
       }
-    }
+    });
   }
 
   private BackgroundImage loadImage(String filename) {

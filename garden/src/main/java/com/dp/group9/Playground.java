@@ -1,17 +1,24 @@
 package com.dp.group9;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Playground implements Facility{
-    private List<Facility> facilities;
+    private ArrayList<Facility> facilities;
 
-    public Playground(List<Facility> facilities){
-        this.facilities = facilities;
+    public Playground(){
+        facilities = new ArrayList<Facility>();
     }
 
-    public void addFacilities(Facility facility){
+    public void addFacility(Facility facility){
         facilities.add(facility);
     }
+
+    public void addFacilities(Facility... facilities){
+        for (Facility facility : facilities) {
+            this.facilities.add(facility);
+        }
+    }
+
     public void display(){
         for (Facility facility : facilities) {
             facility.display();
