@@ -19,28 +19,28 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Pane root = new Pane();
-        Scene scene = new Scene(root, 600, 750); // maintain 4:5 (width to height) ratio
+        Scene scene = new Scene(root, 1000, 750); // maintain 4:3 (width to height) ratio
         GardenLayout gardenLayout = GardenLayout.getInstance();
-        gardenLayout.setLayout(new LayoutType(), root);
+        gardenLayout.setLayout(LayoutType.Garden.getLayoutName(), root);
 
         // Add Playground
-        addPlayground(gardenLayout.getLayoutType().getLayoutName(), root);
+        addPlayground(gardenLayout.getLayoutName(), root);
 
         // Garden Layout
-        MenuButton layoutButton = new MenuButton(gardenLayout.getLayoutType().getLayoutName());
+        MenuButton layoutButton = new MenuButton(gardenLayout.getLayoutName());
         layoutButton.setLayoutX(10);
         layoutButton.setLayoutY(10);
         layoutButton.setPrefWidth(130);
-        LayoutType.LAYOUT_TYPES.forEach((String key, String value) -> {
-            MenuItem menuItem = new MenuItem(key);
+        for (LayoutType type : LayoutType.values()) {
+            MenuItem menuItem = new MenuItem(type.getLayoutName());
             menuItem.setOnAction(e -> {
-                gardenLayout.setLayout(new LayoutType(key), root);
-                layoutButton.setText(key);
+                gardenLayout.setLayout(type.getLayoutName(), root);
+                layoutButton.setText(type.getLayoutName());
                 root.getChildren().removeIf((node) -> !(node instanceof Button || node instanceof MenuButton));
-                addPlayground(key, root);
+                addPlayground(type.getLayoutName(), root);
             });
             layoutButton.getItems().add(menuItem);
-        });
+        }
 
         // Tree
         Button treeButton = new Button("Add Tree");
@@ -64,12 +64,12 @@ public class App extends Application {
 
         // add Buttons and get+show scene
         root.getChildren().addAll(layoutButton, treeButton, flowerButton, grassButton);
-        
+
         stage.setTitle("Garden");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.centerOnScreen();
-        
+
         stage.show();
     }
 
@@ -109,17 +109,17 @@ public class App extends Application {
 
         double randomX;
         if (random.nextBoolean()) {
-            randomX = random.nextDouble() * (start - tree.getTreeView().getFitWidth() / 2);
+            randomX = random.nextDouble() * (start - tree.getView().getFitWidth() - 600);
         } else {
-            randomX = end + random.nextDouble() * (start - tree.getTreeView().getFitWidth() / 2);
+            randomX = end + random.nextDouble() * (start - tree.getView().getFitWidth() / 2);
         }
 
-        int minY = 350;
-        int maxY = 400;
+        int minY = 150;
+        int maxY = 200;
         int randomY = random.nextInt(maxY - minY) + minY;
 
-        tree.getTreeView().setLayoutX(randomX);
-        tree.getTreeView().setLayoutY(randomY);
+        tree.getView().setLayoutX(randomX);
+        tree.getView().setLayoutY(randomY);
 
         tree.display();
     }
@@ -130,8 +130,8 @@ public class App extends Application {
         Plant plant = new SimplePlant();
         Flower flower = new Flower(plant, pane);
 
-        flower.getFlowerView().setLayoutX(random.nextDouble() * (pane.getWidth() - flower.getFlowerView().getFitWidth()));
-        flower.getFlowerView().setLayoutY(pane.getHeight() - flower.getFlowerView().getFitHeight());
+        flower.getView().setLayoutX(random.nextDouble() * (pane.getWidth() - flower.getView().getFitWidth()));
+        flower.getView().setLayoutY(pane.getHeight() - flower.getView().getFitHeight());
 
         flower.display();
     }
@@ -142,8 +142,8 @@ public class App extends Application {
         Plant plant = new SimplePlant();
         Grass grass = new Grass(plant, pane);
 
-        grass.getGrassView().setLayoutX(random.nextDouble() * (pane.getWidth() - grass.getGrassView().getFitWidth()));
-        grass.getGrassView().setLayoutY(pane.getHeight() - grass.getGrassView().getFitHeight());
+        grass.getView().setLayoutX(random.nextDouble() * (pane.getWidth() - grass.getView().getFitWidth()));
+        grass.getView().setLayoutY(pane.getHeight() - grass.getView().getFitHeight());
 
         grass.display();
     }
