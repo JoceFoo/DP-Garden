@@ -52,84 +52,6 @@ public class App extends Application implements Observer {
     private List<Leaf> leaves = new ArrayList<>();
     private List<Lightning> lightningFlashes = new ArrayList<>();
 
-    // private static class Droplet {
-    // double x;
-    // double y;
-    // double speed;
-
-    // public Droplet(double x, double y, double speed) {
-    // this.x = x;
-    // this.y = y;
-    // this.speed = speed;
-    // }
-
-    // public void fall() {
-    // y += speed;
-    // if (y > HEIGHT) {
-    // y = 0;
-    // x = new Random().nextDouble() * WIDTH;
-    // }
-    // }
-    // }
-
-    // private static class Snowflake {
-    // double x;
-    // double y;
-    // double speed;
-
-    // public Snowflake(double x, double y, double speed) {
-    // this.x = x;
-    // this.y = y;
-    // this.speed = speed;
-    // }
-
-    // public void fall() {
-    // y += speed;
-    // if (y > HEIGHT) {
-    // y = 0;
-    // x = new Random().nextDouble() * WIDTH;
-    // }
-    // }
-    // }
-
-    // private static class Leaf {
-    // double x;
-    // double y;
-    // double speed;
-
-    // public Leaf(double x, double y, double speed) {
-    // this.x = x;
-    // this.y = y;
-    // this.speed = speed;
-    // }
-
-    // public void blow() {
-    // x += speed;
-    // if (x > WIDTH) {
-    // x = 0;
-    // }
-    // }
-    // }
-
-    // private static class Lightning {
-    // double startX;
-    // double startY;
-    // double endX;
-    // double endY;
-    // boolean isVisible;
-
-    // public Lightning(double startX, double startY, double endX, double endY) {
-    // this.startX = startX;
-    // this.startY = startY;
-    // this.endX = endX;
-    // this.endY = endY;
-    // this.isVisible = false;
-    // }
-
-    // public void flash() {
-    // isVisible = !isVisible;
-    // }
-    // }
     private static class Droplet {
         double x;
         double y;
@@ -217,7 +139,12 @@ public class App extends Application implements Observer {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Pane root = new Pane();
+        weatherData.registerObserver(this);
+        weatherData.registerObserver(Sunflower);
+        Canvas canvas = new Canvas(WIDTH, HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        initializeWeatherElements();
+        Pane root = new Pane(canvas);
         Scene scene = new Scene(root, 600, 750); // maintain 4:5 (width to height) ratio
         GardenLayout gardenLayout = GardenLayout.getInstance();
         gardenLayout.setLayout(new LayoutType(), root);
@@ -267,14 +194,116 @@ public class App extends Application implements Observer {
         stage.setResizable(false);
         stage.centerOnScreen();
 
-        GardenLayout gardenLayout = GardenLayout.getInstance();
-        gardenLayout.setLayout(new LayoutType("Fourth"), root);
-
-        Image backgroundImage = gardenLayout.getLayoutType().getBackgroundImage().getImage();
-        // stage.setWidth(backgroundImage.getWidth());
-        // stage.setHeight(backgroundImage.getHeight());
-
         stage.show();
+        // Add a VBox to contain buttons
+        VBox buttonContainer = new VBox(10);
+        buttonContainer.setAlignment(Pos.TOP_RIGHT);
+        root.getChildren().add(buttonContainer);
+
+        // Button to choose weather
+        Button chooseWeatherButton = new Button("Choose Weather");
+        chooseWeatherButton.setOnAction(e -> showWeatherDialog());
+        buttonContainer.getChildren().add(chooseWeatherButton);
+        AnimationTimer animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                // Clear canvas
+                gc.clearRect(0, 0, WIDTH, HEIGHT);
+                // Draw raindrops only if it's rainy weather
+                if (isRainyWeather) {
+                    gc.setFill(Color.BLUE);
+                    for (Droplet droplet : droplets) {
+                        droplet.fall();
+                        gc.fillOval(droplet.x, droplet.y, 2, 8);
+                    }
+                }
+
+                else if (isSnowyWeather) {
+                    gc.setFill(Color.WHITE);
+                    for (Snowflake snowflake : snowflakes) {
+                        snowflake.fall();
+                        gc.fillOval(snowflake.x, snowflake.y, 5, 5);
+                    }
+                } else if (isWindyWeather) {
+                    gc.setFill(Color.GREEN);
+                    for (Leaf leaf : leaves) {
+                        leaf.blow();
+                        gc.fillOval(leaf.x, leaf.y, 5, 5);
+                    }
+                } else if (isStormyWeather) {
+                    gc.setFill(Color.DARKGRAY);
+                    // Draw heavy rain
+                    for (Droplet droplet : droplets) {
+                        droplet.fall();
+                        gc.fillOval(droplet.x, droplet.y, 2, 8);
+                    }
+
+                    // Simulate lightning flashes
+                    if (Math.random() < 0.03) {
+                        for (Lightning lightning : lightningFlashes) {
+                            lightning.flash();
+                            if (lightning.isVisible) {
+                                gc.setStroke(Color.WHITE);
+                                gc.strokeLine(lightning.startX, lightning.startY, lightning.endX, lightning.endY);
+                            }
+                        }
+                    }
+                } else {
+                    gc.clearRect(0, 0, WIDTH, HEIGHT);
+
+                }
+            }
+        };
+        animationTimer.start();
+    }
+
+    private void initializeWeatherElements() {
+        for (int i = 0; i < NUM_DROPS; i++) {
+            droplets.add(new Droplet());
+            snowflakes.add(new Snowflake());
+            leaves.add(new Leaf());
+            lightningFlashes.add(new Lightning());
+        }
+    }
+
+    private void showWeatherDialog() {
+        // WeatherData weatherData = new WeatherData();
+
+        ChoiceDialog<String> weatherDialog = new ChoiceDialog<>("Sunny", "Sunny", "Rainy", "Snowy", "Windy", "Stormy");
+        weatherDialog.setTitle("Select Weather");
+        weatherDialog.setHeaderText(null);
+        weatherDialog.setContentText("Choose the current weather:");
+
+        Optional<String> selectedWeather = weatherDialog.showAndWait();
+        if (selectedWeather.isPresent()) {
+            String weather = selectedWeather.get();
+            weatherData.setWeather(weather);
+            Sunflower.update(weather);
+
+            // String weather = selectedWeather.get();
+            // weatherData.setWeather(weather);
+            // update(weather);
+            isRainyWeather = weather.equals("Rainy");
+            isSnowyWeather = weather.equals("Snowy");
+            isWindyWeather = weather.equals("Windy");
+            isStormyWeather = weather.equals("Stormy");
+            // Sunflower.update(weather);
+        }
+    }
+
+    public void displayWeatherConfirmation(String weather) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Weather Set");
+        alert.setHeaderText(null);
+        alert.setContentText("The current weather is set to: " + weather);
+
+        alert.showAndWait();
+    }
+
+    @Override
+    public void update(String weather) {
+        // isRainyWeather = weather.equals("Rainy");
+        displayWeatherConfirmation(weather);
     }
 
     private void addTree(Pane pane) {
