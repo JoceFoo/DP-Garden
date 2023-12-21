@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public class ClimbingWalls implements Facility{
+public class ClimbingWalls extends Facility{
 
     Pane pane;
     private ImageView climbingWallsView;
@@ -24,7 +24,7 @@ public class ClimbingWalls implements Facility{
         pane.getChildren().add(climbingWallsView);
     }    
     
-    public ImageView getClimbingWallsView(){
+    public ImageView getView(){
         return climbingWallsView;
     }
 }

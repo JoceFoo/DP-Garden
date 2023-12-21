@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public class Slide implements Facility{
+public class Slide extends Facility{
 
     Pane pane;
     private ImageView slideView;
@@ -24,7 +24,7 @@ public class Slide implements Facility{
         pane.getChildren().add(slideView);
     }
 
-    public ImageView getSlideView(){
+    public ImageView getView(){
         return slideView;
     }
 }

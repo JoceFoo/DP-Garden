@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public class JungleGym implements Facility{
+public class JungleGym extends Facility{
 
     Pane pane;
     private ImageView jungleGymView;
@@ -24,7 +24,7 @@ public class JungleGym implements Facility{
         pane.getChildren().add(jungleGymView);
     }    
     
-    public ImageView getJungleGymView(){
+    public ImageView getView(){
         return jungleGymView;
     }
 }

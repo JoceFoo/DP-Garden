@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public class RopeBridge implements Facility{
+public class RopeBridge extends Facility{
 
     Pane pane;
     private ImageView ropeBridgeView;
@@ -24,7 +24,7 @@ public class RopeBridge implements Facility{
         pane.getChildren().add(ropeBridgeView);
     }    
     
-    public ImageView getRopeBridgeView(){
+    public ImageView getView(){
         return ropeBridgeView;
     }
 }

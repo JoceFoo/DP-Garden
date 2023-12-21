@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public class MonkeyBars implements Facility{
+public class MonkeyBars extends Facility{
 
     Pane pane;
     private ImageView monkeyBarsView;
@@ -24,7 +24,7 @@ public class MonkeyBars implements Facility{
         pane.getChildren().add(monkeyBarsView);
     }    
     
-    public ImageView getMonkeyBarsView(){
+    public ImageView getView(){
         return monkeyBarsView;
     }
 }

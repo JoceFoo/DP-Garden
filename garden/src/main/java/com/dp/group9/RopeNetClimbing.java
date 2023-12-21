@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public class RopeNetClimbing implements Facility{
+public class RopeNetClimbing extends Facility{
 
     Pane pane;
     private ImageView ropeNetClimbingView;
@@ -24,7 +24,7 @@ public class RopeNetClimbing implements Facility{
         pane.getChildren().add(ropeNetClimbingView);
     }    
     
-    public ImageView getRopeNetClimbingView(){
+    public ImageView getView(){
         return ropeNetClimbingView;
     }
 }

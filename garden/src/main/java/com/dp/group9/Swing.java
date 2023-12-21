@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public class Swing implements Facility{
+public class Swing extends Facility{
 
     Pane pane;
     private ImageView swingView;
@@ -13,8 +13,8 @@ public class Swing implements Facility{
         this.pane = pane;
         Image slide = new Image(getClass().getResourceAsStream("/Swing.png"));
         swingView = new ImageView(slide);
-        swingView.setFitHeight(200);
-        swingView.setFitWidth(150);
+        swingView.setFitHeight(180);
+        swingView.setFitWidth(130);
 
         swingView.setLayoutX(x);
         swingView.setLayoutY(y);
@@ -24,7 +24,7 @@ public class Swing implements Facility{
         pane.getChildren().add(swingView);
     }
 
-    public ImageView getSwingView(){
+    public ImageView getView(){
         return swingView;
     }
 }

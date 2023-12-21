@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public class Seesaw implements Facility{
+public class Seesaw extends Facility{
 
     Pane pane;
     private ImageView seesawView;
@@ -24,7 +24,7 @@ public class Seesaw implements Facility{
         pane.getChildren().add(seesawView);
     }    
     
-    public ImageView getSeesawView(){
+    public ImageView getView(){
         return seesawView;
     }
 }
