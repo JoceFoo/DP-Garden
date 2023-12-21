@@ -43,11 +43,6 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // Load your image
-        // Image image = new Image(getClass().getResourceAsStream("sunnyDog.jpg"));
-
-        // // Create an ImageView for the image
-        // ImageView imageView = new ImageView(image);
         Pane root = new Pane(canvas);
         Scene scene = new Scene(root, 1000, 750); // maintain 4:3 (width to height) ratio
 
@@ -102,8 +97,8 @@ public class App extends Application {
         weatherButton.setOnAction(e -> showWeatherDialog());
 
         // add Buttons and get+show scene
-        // root.getChildren().addAll(layoutButton, treeButton, flowerButton,
-        // grassButton, weatherButton, imageView);
+        root.getChildren().addAll(layoutButton, treeButton, flowerButton,
+                grassButton, weatherButton);
 
         stage.setTitle("Garden");
         stage.setScene(scene);
