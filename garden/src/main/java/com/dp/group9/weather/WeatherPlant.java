@@ -15,16 +15,16 @@ public class WeatherPlant implements Observer {
                 System.out.println("Watering " + weatherPlantName + " plant");
                 break;
             case "rainy":
-                System.out.println("Watering " + weatherPlantName + " plant");
+                System.out.println(weatherPlantName + " is happy");
                 break;
             case "snowy":
-                System.out.println("Watering " + weatherPlantName + " plant");
+                System.out.println(weatherPlantName + " Dies");
                 break;
             case "Strong Wind":
-                System.out.println("Watering " + weatherPlantName + " plant");
+                System.out.println(weatherPlantName + " is destroyed");
                 break;
             case "stormy":
-                System.out.println("Watering " + weatherPlantName + " plant");
+                System.out.println(weatherPlantName + " is destroyed");
                 break;
             default:
                 System.out.println("Unknown weather condition");

@@ -42,7 +42,7 @@ public class App extends Application implements Observer {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
     private static final int NUM_DROPS = 100;
-    private WeatherData weatherData;
+    private WeatherData weatherData = new WeatherData();
     // Create an instance of WeatherPlant for a specific plant
     WeatherPlant Sunflower = new WeatherPlant("Sunflower"); // Change the name as needed
 
@@ -51,15 +51,93 @@ public class App extends Application implements Observer {
     private List<Leaf> leaves = new ArrayList<>();
     private List<Lightning> lightningFlashes = new ArrayList<>();
 
+    // private static class Droplet {
+    // double x;
+    // double y;
+    // double speed;
+
+    // public Droplet(double x, double y, double speed) {
+    // this.x = x;
+    // this.y = y;
+    // this.speed = speed;
+    // }
+
+    // public void fall() {
+    // y += speed;
+    // if (y > HEIGHT) {
+    // y = 0;
+    // x = new Random().nextDouble() * WIDTH;
+    // }
+    // }
+    // }
+
+    // private static class Snowflake {
+    // double x;
+    // double y;
+    // double speed;
+
+    // public Snowflake(double x, double y, double speed) {
+    // this.x = x;
+    // this.y = y;
+    // this.speed = speed;
+    // }
+
+    // public void fall() {
+    // y += speed;
+    // if (y > HEIGHT) {
+    // y = 0;
+    // x = new Random().nextDouble() * WIDTH;
+    // }
+    // }
+    // }
+
+    // private static class Leaf {
+    // double x;
+    // double y;
+    // double speed;
+
+    // public Leaf(double x, double y, double speed) {
+    // this.x = x;
+    // this.y = y;
+    // this.speed = speed;
+    // }
+
+    // public void blow() {
+    // x += speed;
+    // if (x > WIDTH) {
+    // x = 0;
+    // }
+    // }
+    // }
+
+    // private static class Lightning {
+    // double startX;
+    // double startY;
+    // double endX;
+    // double endY;
+    // boolean isVisible;
+
+    // public Lightning(double startX, double startY, double endX, double endY) {
+    // this.startX = startX;
+    // this.startY = startY;
+    // this.endX = endX;
+    // this.endY = endY;
+    // this.isVisible = false;
+    // }
+
+    // public void flash() {
+    // isVisible = !isVisible;
+    // }
+    // }
     private static class Droplet {
         double x;
         double y;
         double speed;
 
-        public Droplet(double x, double y, double speed) {
-            this.x = x;
-            this.y = y;
-            this.speed = speed;
+        public Droplet() {
+            this.x = new Random().nextDouble() * WIDTH;
+            this.y = new Random().nextDouble() * HEIGHT;
+            this.speed = 5 + Math.random() * 5;
         }
 
         public void fall() {
@@ -76,10 +154,10 @@ public class App extends Application implements Observer {
         double y;
         double speed;
 
-        public Snowflake(double x, double y, double speed) {
-            this.x = x;
-            this.y = y;
-            this.speed = speed;
+        public Snowflake() {
+            this.x = new Random().nextDouble() * WIDTH;
+            this.y = new Random().nextDouble() * HEIGHT;
+            this.speed = 2 + Math.random() * 3;
         }
 
         public void fall() {
@@ -96,10 +174,10 @@ public class App extends Application implements Observer {
         double y;
         double speed;
 
-        public Leaf(double x, double y, double speed) {
-            this.x = x;
-            this.y = y;
-            this.speed = speed;
+        public Leaf() {
+            this.x = new Random().nextDouble() * WIDTH;
+            this.y = new Random().nextDouble() * HEIGHT;
+            this.speed = 2 + Math.random() * 3;
         }
 
         public void blow() {
@@ -117,11 +195,11 @@ public class App extends Application implements Observer {
         double endY;
         boolean isVisible;
 
-        public Lightning(double startX, double startY, double endX, double endY) {
-            this.startX = startX;
-            this.startY = startY;
-            this.endX = endX;
-            this.endY = endY;
+        public Lightning() {
+            this.startX = new Random().nextDouble() * WIDTH;
+            this.startY = 0;
+            this.endX = new Random().nextDouble() * WIDTH;
+            this.endY = HEIGHT;
             this.isVisible = false;
         }
 
@@ -130,6 +208,7 @@ public class App extends Application implements Observer {
         }
     }
 
+    private GraphicsContext gc;
     private boolean isRainyWeather = false;
     private boolean isSnowyWeather = false;
     private boolean isWindyWeather = false;
@@ -137,28 +216,12 @@ public class App extends Application implements Observer {
 
     @Override
     public void start(Stage primaryStage) {
-        WeatherData weatherData = new WeatherData();
+        // WeatherData weatherData = new WeatherData();
         weatherData.registerObserver(this);
         weatherData.registerObserver(Sunflower);
         Canvas canvas = new Canvas(WIDTH, HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        for (int i = 0; i < NUM_DROPS; i++) {
-            droplets.add(new Droplet(new Random().nextDouble() * WIDTH, new Random().nextDouble() * HEIGHT,
-                    5 + Math.random() * 5));
-        }
-        for (int i = 0; i < NUM_DROPS; i++) {
-            snowflakes.add(new Snowflake(new Random().nextDouble() * WIDTH, new Random().nextDouble() * HEIGHT,
-                    2 + Math.random() * 3));
-        }
-        for (int i = 0; i < NUM_DROPS; i++) {
-            leaves.add(new Leaf(new Random().nextDouble() * WIDTH, new Random().nextDouble() * HEIGHT,
-                    2 + Math.random() * 3));
-        }
-        for (int i = 0; i < NUM_DROPS; i++) {
-            lightningFlashes.add(
-                    new Lightning(new Random().nextDouble() * WIDTH, 0, new Random().nextDouble() * WIDTH, HEIGHT));
-        }
+        initializeWeatherElements();
         // Load background image
         Image backgroundImage = new Image(getClass().getResourceAsStream("Fourth.jpg"));
         ImageView backgroundImageView = new ImageView(backgroundImage);
@@ -238,8 +301,17 @@ public class App extends Application implements Observer {
         animationTimer.start();
     }
 
+    private void initializeWeatherElements() {
+        for (int i = 0; i < NUM_DROPS; i++) {
+            droplets.add(new Droplet());
+            snowflakes.add(new Snowflake());
+            leaves.add(new Leaf());
+            lightningFlashes.add(new Lightning());
+        }
+    }
+
     private void showWeatherDialog() {
-        WeatherData weatherData = new WeatherData();
+        // WeatherData weatherData = new WeatherData();
 
         ChoiceDialog<String> weatherDialog = new ChoiceDialog<>("Sunny", "Sunny", "Rainy", "Snowy", "Windy", "Stormy");
         weatherDialog.setTitle("Select Weather");
@@ -250,12 +322,16 @@ public class App extends Application implements Observer {
         if (selectedWeather.isPresent()) {
             String weather = selectedWeather.get();
             weatherData.setWeather(weather);
-            update(weather);
+            Sunflower.update(weather);
+
+            // String weather = selectedWeather.get();
+            // weatherData.setWeather(weather);
+            // update(weather);
             isRainyWeather = weather.equals("Rainy");
             isSnowyWeather = weather.equals("Snowy");
             isWindyWeather = weather.equals("Windy");
             isStormyWeather = weather.equals("Stormy");
-            Sunflower.update(weather);
+            // Sunflower.update(weather);
         }
     }
 
@@ -327,11 +403,5 @@ public class App extends Application implements Observer {
     public static void main(String[] args) {
         launch(args);
     }
-
-    // @Override
-    // public void update(String weather) {
-    // // TODO Auto-generated method stub
-    // throw new UnsupportedOperationException("Unimplemented method 'update'");
-    // }
 
 }
