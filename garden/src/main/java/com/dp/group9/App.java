@@ -75,22 +75,22 @@ public class App extends Application {
 
     private void addPlayground(String layoutType, Pane root) {
         Playground playground = new Playground();
-        if (layoutType.equals("Garden")) {
+        if (layoutType.equals(LayoutType.Garden.getLayoutName())) {
             //garden facilities
             Slide slide = new Slide(root, 80, 350);
             Seesaw seesaw = new Seesaw(root, 550, 270);
             playground.addFacilities(slide, seesaw);
-        } else if (layoutType.equals("Hillside")) {
+        } else if (layoutType.equals(LayoutType.Hillside.getLayoutName())) {
             //hillside facilities
             Swing swing = new Swing(root, 700, 320);
             RopeNetClimbing ropeNetClimbing = new RopeNetClimbing(root, 80, 500);
             playground.addFacilities(swing, ropeNetClimbing);
-        } else if (layoutType.equals("Off the city")) {
+        } else if (layoutType.equals(LayoutType.OffTheCity.getLayoutName())) {
             //off the city facilities
             ClimbingWalls climbingWalls = new ClimbingWalls(root, 600, 450);
             JungleGym jungleGym = new JungleGym(root, 250, 370);
             playground.addFacilities(climbingWalls, jungleGym);
-        } else if (layoutType.equals("Mountain view")) {
+        } else if (layoutType.equals(LayoutType.MountainView.getLayoutName())) {
             //mountain facilities
             MonkeyBars monkeyBars = new MonkeyBars(root, 70, 380);
             RopeBridge ropeBridge = new RopeBridge(root, 680, 300);
