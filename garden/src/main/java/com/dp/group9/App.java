@@ -10,13 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -36,25 +34,21 @@ public class App extends Application {
 
     private WeatherData weatherData = new WeatherData();// Subject
     private WeatherStation weatherStation;// Observer
+
     WeatherPlant weatherPlant = new WeatherPlant("weatherPlant");// Observer
     WeatherAnimal weatherAnimal = new WeatherAnimal("weatherAnimal");// Observer
     Canvas canvas = new Canvas(1000, 750);
     GraphicsContext gc = canvas.getGraphicsContext2D();
+    private String lastSelectedWeather = "No Weather Selected";
 
     @Override
     public void start(Stage stage) throws IOException {
         Pane root = new Pane(canvas);
         Scene scene = new Scene(root, 1000, 750); // maintain 4:3 (width to height) ratio
-
-        // Set the initial position for the image in the middle of the Pane
-        // double centerX = (scene.getWidth() - image.getWidth()) / 2;
-        // double centerY = (scene.getHeight() - image.getHeight()) / 2;
-        // imageView.setLayoutX(centerX);
-        // imageView.setLayoutY(centerY);
-        // root.getChildren().add(imageView);
         GardenLayout gardenLayout = GardenLayout.getInstance();
         gardenLayout.setLayout(LayoutType.Garden.getLayoutName(), root);
         weatherData.registerObserver(weatherPlant);
+        weatherData.registerObserver(weatherAnimal);
         weatherStation = new WeatherStation(gc, weatherData);
         // Garden Layout
         MenuButton layoutButton = new MenuButton(gardenLayout.getLayoutName());
@@ -98,7 +92,7 @@ public class App extends Application {
 
         // add Buttons and get+show scene
         root.getChildren().addAll(layoutButton, treeButton, flowerButton,
-                grassButton, weatherButton);
+                grassButton, weatherButton, weatherPlant.getWeatherPlantView(), weatherAnimal.getWeatherAnimalView());
 
         stage.setTitle("Garden");
         stage.setScene(scene);
@@ -118,7 +112,8 @@ public class App extends Application {
     }
 
     private void showWeatherDialog() {
-        ChoiceDialog<String> weatherDialog = new ChoiceDialog<>("Sunny", "Sunny", "Rainy", "Snowy", "Windy", "Stormy");
+        ChoiceDialog<String> weatherDialog = new ChoiceDialog<>(lastSelectedWeather, "Sunny", "Rainy", "Snowy", "Windy",
+                "Stormy");
         weatherDialog.setTitle("Select Weather");
         weatherDialog.setHeaderText(null);
         weatherDialog.setContentText("Choose the current weather:");
@@ -126,9 +121,12 @@ public class App extends Application {
         Optional<String> selectedWeather = weatherDialog.showAndWait();
         if (selectedWeather.isPresent()) {
             String weather = selectedWeather.get();
+            lastSelectedWeather = weather;
             weatherData.setWeather(weather);
+            weatherData.notifyObservers();
             weatherStation.update(weather);
-            // weatherAnimal.update(weather);
+            weatherAnimal.update(weather);
+            weatherPlant.update(weather);
         }
     }
 

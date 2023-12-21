@@ -1,6 +1,7 @@
 package com.dp.group9.weather;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class WeatherData implements Subject {
     private ArrayList<Observer> observers;
@@ -13,6 +14,10 @@ public class WeatherData implements Subject {
     public void setWeather(String newWeather) {
         this.weather = newWeather;
         notifyObservers();
+    }
+
+    public List<Observer> getObservers() {
+        return observers;
     }
 
     public void registerObserver(Observer o) {

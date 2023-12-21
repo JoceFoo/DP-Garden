@@ -6,40 +6,28 @@ import javafx.scene.image.ImageView;
 public class WeatherAnimal implements Observer {
     private String weatherAnimalName;
     private ImageView weatherAnimalView;
-
+    private boolean isSunnyWeather;
+    private boolean isRainyWeather;
+    private boolean isSnowyWeather;
+    private boolean isWindyWeather;
+    private boolean isStormyWeather;
     // Add a default image path
-    private static final String DEFAULT_IMAGE_PATH = "sunnyDog.jpg";
+    private static final String DEFAULT_IMAGE_PATH = "WeatherAnimalPhoto/sunnyDog.png";
 
     public WeatherAnimal(String weatherAnimalName) {
         this.weatherAnimalName = weatherAnimalName;
         this.weatherAnimalView = new ImageView();
-        setDefaultImage();
+        // setDefaultImage();
     }
 
     public ImageView getWeatherAnimalView() {
         return weatherAnimalView;
     }
 
-    public void setWeatherAnimal(String weatherAnimalType) {
-        // Load the appropriate image based on the weather animal type
-        String imagePath = getImagePath(weatherAnimalType);
-        setImage(imagePath);
+    public void setWeatherAnimalView(ImageView weatherAnimalView) {
+        this.weatherAnimalView = weatherAnimalView;
     }
 
-    private void setDefaultImage() {
-        // Set a default image
-        setImage(DEFAULT_IMAGE_PATH);
-    }
-
-    // private void setImage(String imagePath) {
-    // try {
-    // Image image = new Image(imagePath);
-    // weatherAnimalView.setImage(image);
-    // } catch (Exception e) {
-    // // Handle image loading error (e.g., log a message, set a default image)
-    // e.printStackTrace();
-    // }
-    // }
     private void setImage(String imagePath) {
         try {
             Image image = new Image(getClass().getResourceAsStream(imagePath));
@@ -50,166 +38,68 @@ public class WeatherAnimal implements Observer {
         }
     }
 
-    private String getImagePath(String weather) {
-        // Define the image paths for different weather animal types
-        switch (weather.toLowerCase()) {
-            case "sunny":
-                return "sunnyDog.jpg";
-            case "rainy":
-                return "sunnyDog.jpg";
-            case "snowy":
-                return "sunnyDog.jpg";
-            case "windy":
-                return "sunnyDog.jpg";
-            case "stormy":
-                return "sunnyDog.jpg";
-            default:
-                return DEFAULT_IMAGE_PATH;
+    private String getImagePath() {
+        // Define the image paths based on the weather conditions
+        if (isSunnyWeather) {
+            return "WeatherAnimalPhoto/sunnyDog.png";
+        } else if (isRainyWeather) {
+            return "WeatherAnimalPhoto/rainyCat.png";
+        } else if (isSnowyWeather) {
+            return "WeatherAnimalPhoto/snowyPenguin.png";
+        } else if (isWindyWeather) {
+            return "WeatherAnimalPhoto/windyPooh.png";
+        } else if (isStormyWeather) {
+            return "WeatherAnimalPhoto/stormyPanda.png";
+        } else {
+            // Default for sunny or unknown weather
+            return "WeatherAnimalPhoto/sunnyDog.png";
         }
     }
 
     @Override
     public void update(String weather) {
-        // Use the update function to place the animal based on the weather
-        placeAnimal(weather);
+        isSunnyWeather = weather.equals("Sunny");
+        isRainyWeather = weather.equals("Rainy");
+        isSnowyWeather = weather.equals("Snowy");
+        isWindyWeather = weather.equals("Windy");
+        isStormyWeather = weather.equals("Stormy");
+        placeAnimal();
     }
 
-    private void placeAnimal(String weather) {
+    public void placeAnimal() {
         // Define the position where you want to place the animal based on the weather
         double x;
         double y;
-
-        // Set the position based on the weather type
-        switch (weather.toLowerCase()) {
-            case "sunny":
-                x = 100;
-                y = 500;
-                break;
-            case "rainy":
-                x = 300;
-                y = 200;
-                break;
-            case "snowy":
-                x = 600;
-                y = 300;
-                break;
-            case "windy":
-                x = 800;
-                y = 100;
-                break;
-            case "stormy":
-                x = 400;
-                y = 400;
-                break;
-            default:
-                // Set a default position if the weather is unknown
-                x = 100;
-                y = 100;
+        if (isSunnyWeather) {
+            x = 100;
+            y = 500;
+        } else if (isRainyWeather) {
+            x = 300;
+            y = 400;
+        } else if (isSnowyWeather) {
+            x = 580;
+            y = 330;
+        } else if (isWindyWeather) {
+            x = 100;
+            y = 400;
+        } else if (isStormyWeather) {
+            x = 670;
+            y = 500;
+        } else {
+            // Default for sunny or unknown weather
+            x = 100;
+            y = 500;
         }
 
         // Set the position of the animal
         weatherAnimalView.setLayoutX(x);
         weatherAnimalView.setLayoutY(y);
+        weatherAnimalView.setFitWidth(200);
+        weatherAnimalView.setFitHeight(200);
 
         // Load the appropriate image based on the weather
-        String imagePath = getImagePath(weather);
-        System.out.println(imagePath);
+        String imagePath = getImagePath();
+        // System.out.println(imagePath);
         setImage(imagePath);
     }
 }
-
-// package com.dp.group9.weather;
-
-// import javafx.scene.image.Image;
-// import javafx.scene.image.ImageView;
-
-// public class WeatherAnimal implements Observer {
-// private String weatherAnimalName;
-// private ImageView weatherAnimalView;
-
-// public WeatherAnimal(String weatherAnimalName) {
-// this.weatherAnimalName = weatherAnimalName;
-// this.weatherAnimalView = new ImageView(); // You may want to set a default
-// image
-// }
-
-// public ImageView getWeatherAnimalView() {
-// return weatherAnimalView;
-// }
-
-// public void setWeatherAnimal(String weatherAnimalType) {
-// // Load the appropriate image based on the weather animal type
-// String imagePath = getImagePath(weatherAnimalType);
-// Image image = new Image(imagePath);
-// weatherAnimalView.setImage(image);
-// }
-
-// private String getImagePath(String weather) {
-// // Define the image paths for different weather animal types
-// switch (weather.toLowerCase()) {
-// case "sunny":
-// return "sunnyDog.jpg";
-// case "rainy":
-// return "sunnyDog.jpg";
-// case "snowy":
-// return "sunnyDog.jpg";
-// case "windy":
-// return "sunnyDog.jpg";
-// case "stormy":
-// return "sunnyDog.jpg";
-// default:
-// return "sunnyDog.jpg";
-// }
-// }
-
-// @Override
-// public void update(String weather) {
-// // Use the update function to place the animal based on the weather
-// placeAnimal(weather);
-// }
-
-// private void placeAnimal(String weather) {
-// // Define the position where you want to place the animal based on the
-// weather
-// double x = 0;
-// double y = 0;
-
-// // Set the position based on the weather type
-// switch (weather.toLowerCase()) {
-// case "sunny":
-// x = 100;
-// y = 500;
-// break;
-// case "rainy":
-// x = 300;
-// y = 200;
-// break;
-// case "snowy":
-// x = 600;
-// y = 300;
-// break;
-// case "windy":
-// x = 800;
-// y = 100;
-// break;
-// case "stormy":
-// x = 400;
-// y = 400;
-// break;
-// default:
-// // Set a default position if the weather is unknown
-// x = 100;
-// y = 100;
-// }
-
-// // Set the position of the animal
-// weatherAnimalView.setLayoutX(x);
-// weatherAnimalView.setLayoutY(y);
-
-// // Load the appropriate image based on the weather
-// String imagePath = getImagePath(weather);
-// System.out.println(imagePath);
-// Image image = new Image(imagePath);
-// weatherAnimalView.setImage(image);
-// }
-// }

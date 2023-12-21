@@ -19,6 +19,7 @@ public class WeatherStation implements Observer {
     private List<Leaf> leaves = new ArrayList<>();
     private List<Lightning> lightningFlashes = new ArrayList<>();
     private GraphicsContext gc;
+    private boolean isSunnyWeather;
     private boolean isRainyWeather;
     private boolean isSnowyWeather;
     private boolean isWindyWeather;
@@ -32,6 +33,7 @@ public class WeatherStation implements Observer {
 
     @Override
     public void update(String weather) {
+        isSunnyWeather = weather.equals("Sunny");
         isRainyWeather = weather.equals("Rainy");
         isSnowyWeather = weather.equals("Snowy");
         isWindyWeather = weather.equals("Windy");
@@ -131,7 +133,13 @@ public class WeatherStation implements Observer {
         gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
 
         // Draw weather based on current conditions
-        if (isRainyWeather) {
+        if (isSunnyWeather) {
+            gc.setFill(Color.color(1, 0.9, 0.1));
+            double sunSize = 100; // Adjust the size of the sun as needed
+            gc.fillOval(WIDTH - sunSize - 10, 10, sunSize, sunSize);
+        }
+
+        else if (isRainyWeather) {
             gc.setFill(Color.BLUE);
             for (Droplet droplet : droplets) {
                 droplet.fall();
