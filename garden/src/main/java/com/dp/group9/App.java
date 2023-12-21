@@ -9,13 +9,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.HBox;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.scene.layout.Pane;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +30,7 @@ import com.dp.group9.weather.WeatherPlant;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
@@ -215,139 +216,65 @@ public class App extends Application implements Observer {
     private boolean isStormyWeather = false;
 
     @Override
-    public void start(Stage primaryStage) {
-        // WeatherData weatherData = new WeatherData();
-        weatherData.registerObserver(this);
-        weatherData.registerObserver(Sunflower);
-        Canvas canvas = new Canvas(WIDTH, HEIGHT);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        initializeWeatherElements();
-        // Load background image
-        Image backgroundImage = new Image(getClass().getResourceAsStream("Fourth.jpg"));
-        ImageView backgroundImageView = new ImageView(backgroundImage);
-        backgroundImageView.setFitWidth(WIDTH);
-        backgroundImageView.setFitHeight(HEIGHT);
-        // imageUrl not found
+    public void start(Stage stage) throws IOException {
+        Pane root = new Pane();
+        Scene scene = new Scene(root, 600, 750); // maintain 4:5 (width to height) ratio
+        GardenLayout gardenLayout = GardenLayout.getInstance();
+        gardenLayout.setLayout(new LayoutType(), root);
 
-        StackPane root = new StackPane(backgroundImageView, canvas);
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        // Garden Layout
+        MenuButton layoutButton = new MenuButton(gardenLayout.getLayoutType().getLayoutName());
+        layoutButton.setLayoutX(10);
+        layoutButton.setLayoutY(10);
+        layoutButton.setPrefWidth(130);
+        LayoutType.LAYOUT_TYPES.forEach((String key, String value) -> {
+            MenuItem menuItem = new MenuItem(key);
+            menuItem.setOnAction(e -> {
+                gardenLayout.setLayout(new LayoutType(value), root);
+                layoutButton.setText(key);
+            });
+            layoutButton.getItems().add(menuItem);
+        });
 
-        primaryStage.setTitle("Rain Background");
-        primaryStage.setScene(scene);
-        primaryStage.setMaxWidth(WIDTH);
-        primaryStage.setMaxHeight(HEIGHT);
-        primaryStage.setResizable(false);
-        primaryStage.centerOnScreen();
-        primaryStage.show();
-        // Add a VBox to contain buttons
-        VBox buttonContainer = new VBox(10);
-        buttonContainer.setAlignment(Pos.TOP_RIGHT);
-        root.getChildren().add(buttonContainer);
+        // Tree
+        Button treeButton = new Button("Add Tree");
+        treeButton.setLayoutX(layoutButton.getLayoutX() + layoutButton.getWidth() + 140); // beside the layout button
+        treeButton.setLayoutY(10);
 
-        // Button to choose weather
-        Button chooseWeatherButton = new Button("Choose Weather");
-        chooseWeatherButton.setOnAction(e -> showWeatherDialog());
-        buttonContainer.getChildren().add(chooseWeatherButton);
-        AnimationTimer animationTimer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                // Clear canvas
-                gc.clearRect(0, 0, WIDTH, HEIGHT);
-                // Draw raindrops only if it's rainy weather
-                if (isRainyWeather) {
-                    gc.setFill(Color.BLUE);
-                    for (Droplet droplet : droplets) {
-                        droplet.fall();
-                        gc.fillOval(droplet.x, droplet.y, 2, 8);
-                    }
-                }
+        treeButton.setOnAction(e -> addTree(root));
 
-                else if (isSnowyWeather) {
-                    gc.setFill(Color.WHITE);
-                    for (Snowflake snowflake : snowflakes) {
-                        snowflake.fall();
-                        gc.fillOval(snowflake.x, snowflake.y, 5, 5);
-                    }
-                } else if (isWindyWeather) {
-                    gc.setFill(Color.GREEN);
-                    for (Leaf leaf : leaves) {
-                        leaf.blow();
-                        gc.fillOval(leaf.x, leaf.y, 5, 5);
-                    }
-                } else if (isStormyWeather) {
-                    gc.setFill(Color.DARKGRAY);
-                    // Draw heavy rain
-                    for (Droplet droplet : droplets) {
-                        droplet.fall();
-                        gc.fillOval(droplet.x, droplet.y, 2, 8);
-                    }
+        // Flower
+        Button flowerButton = new Button("Add Flower");
+        flowerButton.setLayoutX(treeButton.getLayoutX() + treeButton.getWidth() + 80); // beside the tree button
+        flowerButton.setLayoutY(10);
 
-                    // Simulate lightning flashes
-                    if (Math.random() < 0.03) {
-                        for (Lightning lightning : lightningFlashes) {
-                            lightning.flash();
-                            if (lightning.isVisible) {
-                                gc.setStroke(Color.WHITE);
-                                gc.strokeLine(lightning.startX, lightning.startY, lightning.endX, lightning.endY);
-                            }
-                        }
-                    }
-                } else {
-                    gc.clearRect(0, 0, WIDTH, HEIGHT);
+        flowerButton.setOnAction(e -> addFlower(root));
 
-                }
-            }
-        };
-        animationTimer.start();
-    }
+        // Grass
+        Button grassButton = new Button("Add Grass");
+        grassButton.setLayoutX(flowerButton.getLayoutX() + flowerButton.getWidth() + 90);// beside the flower button
+        grassButton.setLayoutY(10);
 
-    private void initializeWeatherElements() {
-        for (int i = 0; i < NUM_DROPS; i++) {
-            droplets.add(new Droplet());
-            snowflakes.add(new Snowflake());
-            leaves.add(new Leaf());
-            lightningFlashes.add(new Lightning());
-        }
-    }
+        grassButton.setOnAction(e -> addGrass(root));
 
-    private void showWeatherDialog() {
-        // WeatherData weatherData = new WeatherData();
+        // add Buttons and get+show scene
+        root.getChildren().addAll(treeButton, flowerButton, grassButton);
 
-        ChoiceDialog<String> weatherDialog = new ChoiceDialog<>("Sunny", "Sunny", "Rainy", "Snowy", "Windy", "Stormy");
-        weatherDialog.setTitle("Select Weather");
-        weatherDialog.setHeaderText(null);
-        weatherDialog.setContentText("Choose the current weather:");
+        stage.setTitle("Garden");
+        stage.setScene(scene);
+        stage.setMaxWidth(900);
+        stage.setMaxHeight(720);
+        stage.setResizable(false);
+        stage.centerOnScreen();
 
-        Optional<String> selectedWeather = weatherDialog.showAndWait();
-        if (selectedWeather.isPresent()) {
-            String weather = selectedWeather.get();
-            weatherData.setWeather(weather);
-            Sunflower.update(weather);
+        GardenLayout gardenLayout = GardenLayout.getInstance();
+        gardenLayout.setLayout(new LayoutType("Fourth"), root);
 
-            // String weather = selectedWeather.get();
-            // weatherData.setWeather(weather);
-            // update(weather);
-            isRainyWeather = weather.equals("Rainy");
-            isSnowyWeather = weather.equals("Snowy");
-            isWindyWeather = weather.equals("Windy");
-            isStormyWeather = weather.equals("Stormy");
-            // Sunflower.update(weather);
-        }
-    }
+        Image backgroundImage = gardenLayout.getLayoutType().getBackgroundImage().getImage();
+        // stage.setWidth(backgroundImage.getWidth());
+        // stage.setHeight(backgroundImage.getHeight());
 
-    public void displayWeatherConfirmation(String weather) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Weather Set");
-        alert.setHeaderText(null);
-        alert.setContentText("The current weather is set to: " + weather);
-
-        alert.showAndWait();
-    }
-
-    @Override
-    public void update(String weather) {
-        // isRainyWeather = weather.equals("Rainy");
-        displayWeatherConfirmation(weather);
+        stage.show();
     }
 
     private void addTree(Pane pane) {
@@ -360,13 +287,13 @@ public class App extends Application implements Observer {
 
         double randomX;
         if (random.nextBoolean()) {
-            randomX = random.nextDouble() * (start - tree.getTreeView().getFitWidth() / 2);
+            randomX = random.nextDouble() * (start - tree.getTreeView().getFitWidth()) - start;
         } else {
             randomX = end + random.nextDouble() * (start - tree.getTreeView().getFitWidth() / 2);
         }
 
-        int minY = 350;
-        int maxY = 400;
+        int minY = 150;
+        int maxY = 200;
         int randomY = random.nextInt(maxY - minY) + minY;
 
         tree.getTreeView().setLayoutX(randomX);
