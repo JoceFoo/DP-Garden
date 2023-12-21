@@ -19,23 +19,23 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Pane root = new Pane();
-        Scene scene = new Scene(root, 600, 750); // maintain 4:5 (width to height) ratio
+        Scene scene = new Scene(root, 1000, 750); // maintain 4:3 (width to height) ratio
         GardenLayout gardenLayout = GardenLayout.getInstance();
-        gardenLayout.setLayout(new LayoutType(), root);
+        gardenLayout.setLayout(LayoutType.Garden.getLayoutName(), root);
 
         // Garden Layout
-        MenuButton layoutButton = new MenuButton(gardenLayout.getLayoutType().getLayoutName());
+        MenuButton layoutButton = new MenuButton(gardenLayout.getLayoutName());
         layoutButton.setLayoutX(10);
         layoutButton.setLayoutY(10);
         layoutButton.setPrefWidth(130);
-        LayoutType.LAYOUT_TYPES.forEach((String key, String value) -> {
-            MenuItem menuItem = new MenuItem(key);
+        for (LayoutType type : LayoutType.values()) {
+            MenuItem menuItem = new MenuItem(type.getLayoutName());
             menuItem.setOnAction(e -> {
-                gardenLayout.setLayout(new LayoutType(value), root);
-                layoutButton.setText(key);
+                gardenLayout.setLayout(type.getLayoutName(), root);
+                layoutButton.setText(type.getLayoutName());
             });
             layoutButton.getItems().add(menuItem);
-        });
+        }
 
         // Tree
         Button treeButton = new Button("Add Tree");
