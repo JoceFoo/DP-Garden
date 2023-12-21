@@ -60,12 +60,12 @@ public class App extends Application {
 
         // add Buttons and get+show scene
         root.getChildren().addAll(layoutButton, treeButton, flowerButton, grassButton);
-        
+
         stage.setTitle("Garden");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.centerOnScreen();
-        
+
         stage.show();
     }
 
@@ -79,7 +79,7 @@ public class App extends Application {
 
         double randomX;
         if (random.nextBoolean()) {
-            randomX = random.nextDouble() * (start - tree.getTreeView().getFitWidth()) - start;
+            randomX = random.nextDouble() * (start - tree.getTreeView().getFitWidth() - 600);
         } else {
             randomX = end + random.nextDouble() * (start - tree.getTreeView().getFitWidth() / 2);
         }
@@ -100,7 +100,8 @@ public class App extends Application {
         Plant plant = new SimplePlant();
         Flower flower = new Flower(plant, pane);
 
-        flower.getFlowerView().setLayoutX(random.nextDouble() * (pane.getWidth() - flower.getFlowerView().getFitWidth()));
+        flower.getFlowerView()
+                .setLayoutX(random.nextDouble() * (pane.getWidth() - flower.getFlowerView().getFitWidth()));
         flower.getFlowerView().setLayoutY(pane.getHeight() - flower.getFlowerView().getFitHeight());
 
         flower.display();
