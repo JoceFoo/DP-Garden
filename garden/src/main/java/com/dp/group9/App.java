@@ -79,17 +79,17 @@ public class App extends Application {
 
         double randomX;
         if (random.nextBoolean()) {
-            randomX = random.nextDouble() * (start - tree.getTreeView().getFitWidth() - 600);
+            randomX = random.nextDouble() * (start - tree.getView().getFitWidth() - 600);
         } else {
-            randomX = end + random.nextDouble() * (start - tree.getTreeView().getFitWidth() / 2);
+            randomX = end + random.nextDouble() * (start - tree.getView().getFitWidth() / 2);
         }
 
         int minY = 150;
         int maxY = 200;
         int randomY = random.nextInt(maxY - minY) + minY;
 
-        tree.getTreeView().setLayoutX(randomX);
-        tree.getTreeView().setLayoutY(randomY);
+        tree.getView().setLayoutX(randomX);
+        tree.getView().setLayoutY(randomY);
 
         tree.display();
     }
@@ -100,9 +100,8 @@ public class App extends Application {
         Plant plant = new SimplePlant();
         Flower flower = new Flower(plant, pane);
 
-        flower.getFlowerView()
-                .setLayoutX(random.nextDouble() * (pane.getWidth() - flower.getFlowerView().getFitWidth()));
-        flower.getFlowerView().setLayoutY(pane.getHeight() - flower.getFlowerView().getFitHeight());
+        flower.getView().setLayoutX(random.nextDouble() * (pane.getWidth() - flower.getView().getFitWidth()));
+        flower.getView().setLayoutY(pane.getHeight() - flower.getView().getFitHeight());
 
         flower.display();
     }
@@ -113,8 +112,8 @@ public class App extends Application {
         Plant plant = new SimplePlant();
         Grass grass = new Grass(plant, pane);
 
-        grass.getGrassView().setLayoutX(random.nextDouble() * (pane.getWidth() - grass.getGrassView().getFitWidth()));
-        grass.getGrassView().setLayoutY(pane.getHeight() - grass.getGrassView().getFitHeight());
+        grass.getView().setLayoutX(random.nextDouble() * (pane.getWidth() - grass.getView().getFitWidth()));
+        grass.getView().setLayoutY(pane.getHeight() - grass.getView().getFitHeight());
 
         grass.display();
     }

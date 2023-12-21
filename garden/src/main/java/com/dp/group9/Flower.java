@@ -20,10 +20,12 @@ public class Flower extends PlantDecorator{
         flowerView.setLayoutY(pane.getHeight() - flowerView.getFitHeight());
     }
 
-    public ImageView getFlowerView() {
+    @Override
+    public ImageView getView() {
         return flowerView;
     }
 
+    @Override
     public void display() {
         pane.getChildren().add(flowerView);
     }  
