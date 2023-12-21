@@ -13,8 +13,8 @@ public class JungleGym extends Facility{
         this.pane = pane;
         Image jungleGym = new Image(getClass().getResourceAsStream("/JungleGym.png"));
         jungleGymView = new ImageView(jungleGym);
-        jungleGymView.setFitHeight(220);
-        jungleGymView.setFitWidth(220);
+        jungleGymView.setFitHeight(230);
+        jungleGymView.setFitWidth(230);
 
         jungleGymView.setLayoutX(x);
         jungleGymView.setLayoutY(y);

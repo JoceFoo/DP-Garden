@@ -13,8 +13,8 @@ public class Swing extends Facility{
         this.pane = pane;
         Image slide = new Image(getClass().getResourceAsStream("/Swing.png"));
         swingView = new ImageView(slide);
-        swingView.setFitHeight(180);
-        swingView.setFitWidth(130);
+        swingView.setFitHeight(170);
+        swingView.setFitWidth(120);
 
         swingView.setLayoutX(x);
         swingView.setLayoutY(y);

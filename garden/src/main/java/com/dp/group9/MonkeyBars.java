@@ -13,8 +13,8 @@ public class MonkeyBars extends Facility{
         this.pane = pane;
         Image monkeyBars = new Image(getClass().getResourceAsStream("/MonkeyBars.png"));
         monkeyBarsView = new ImageView(monkeyBars);
-        monkeyBarsView.setFitHeight(290);
-        monkeyBarsView.setFitWidth(290);
+        monkeyBarsView.setFitHeight(320);
+        monkeyBarsView.setFitWidth(320);
 
         monkeyBarsView.setLayoutX(x);
         monkeyBarsView.setLayoutY(y);

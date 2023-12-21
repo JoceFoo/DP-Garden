@@ -77,23 +77,23 @@ public class App extends Application {
         Playground playground = new Playground();
         if (layoutType.equals("Garden")) {
             //garden facilities
-            Slide slide = new Slide(root, 80, 400);
-            Seesaw seesaw = new Seesaw(root, 450, 250);
+            Slide slide = new Slide(root, 80, 350);
+            Seesaw seesaw = new Seesaw(root, 550, 270);
             playground.addFacilities(slide, seesaw);
         } else if (layoutType.equals("Hillside")) {
             //hillside facilities
-            Swing swing = new Swing(root, 400, 320);
+            Swing swing = new Swing(root, 700, 320);
             RopeNetClimbing ropeNetClimbing = new RopeNetClimbing(root, 80, 500);
             playground.addFacilities(swing, ropeNetClimbing);
         } else if (layoutType.equals("Off the city")) {
             //off the city facilities
-            ClimbingWalls climbingWalls = new ClimbingWalls(root, 300, 450);
-            JungleGym jungleGym = new JungleGym(root, 60, 370);
+            ClimbingWalls climbingWalls = new ClimbingWalls(root, 600, 450);
+            JungleGym jungleGym = new JungleGym(root, 250, 370);
             playground.addFacilities(climbingWalls, jungleGym);
         } else if (layoutType.equals("Mountain view")) {
             //mountain facilities
-            MonkeyBars monkeyBars = new MonkeyBars(root, 70, 450);
-            RopeBridge ropeBridge = new RopeBridge(root, 350, 300);
+            MonkeyBars monkeyBars = new MonkeyBars(root, 70, 380);
+            RopeBridge ropeBridge = new RopeBridge(root, 680, 300);
             playground.addFacilities(monkeyBars, ropeBridge);
         }
         playground.display();

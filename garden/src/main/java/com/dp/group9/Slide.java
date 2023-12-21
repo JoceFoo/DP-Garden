@@ -13,8 +13,8 @@ public class Slide extends Facility{
         this.pane = pane;
         Image slide = new Image(getClass().getResourceAsStream("/Slide.png"));
         slideView = new ImageView(slide);
-        slideView.setFitHeight(200);
-        slideView.setFitWidth(200);
+        slideView.setFitHeight(250);
+        slideView.setFitWidth(250);
 
         slideView.setLayoutX(x);
         slideView.setLayoutY(y);
