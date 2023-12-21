@@ -20,10 +20,12 @@ public class Tree extends PlantDecorator {
         treeView.setLayoutY(pane.getHeight() - treeView.getFitHeight());
     }
 
-    public ImageView getTreeView() {
+    @Override
+    public ImageView getView() {
         return treeView;
     }
 
+    @Override
     public void display() {
         pane.getChildren().add(treeView);
     }

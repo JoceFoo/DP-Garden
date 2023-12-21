@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public class Grass extends PlantDecorator{
+public class Grass extends PlantDecorator {
     Pane pane;
     ImageView grassView;
 
@@ -20,11 +20,13 @@ public class Grass extends PlantDecorator{
         grassView.setLayoutY(pane.getHeight() - grassView.getFitHeight());
     }
 
-    public ImageView getGrassView() {
+    @Override
+    public ImageView getView() {
         return grassView;
     }
 
+    @Override
     public void display() {
         pane.getChildren().add(grassView);
-    }  
+    }
 }
