@@ -20,7 +20,7 @@ public class WeatherPlant implements Observer {
             case "snowy":
                 System.out.println(weatherPlantName + " Dies");
                 break;
-            case "Strong Wind":
+            case "windy":
                 System.out.println(weatherPlantName + " is destroyed");
                 break;
             case "stormy":

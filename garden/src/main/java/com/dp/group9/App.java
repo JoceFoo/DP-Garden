@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.Random;
 
+import com.dp.group9.weather.WeatherAnimal;
 import com.dp.group9.weather.WeatherData;
 import com.dp.group9.weather.WeatherPlant;
 import com.dp.group9.weather.WeatherStation;
@@ -31,26 +32,21 @@ import javafx.scene.control.Alert.AlertType;
  */
 public class App extends Application {
 
-    private WeatherData weatherData = new WeatherData();
-    // Create an instance of WeatherPlant for a specific plant
-    WeatherPlant Sunflower = new WeatherPlant("Sunflower"); // Change the name as needed
-    private WeatherStation weatherStation;
-    Canvas canvas = new Canvas(900, 720);
+    private WeatherData weatherData = new WeatherData();// Subject
+    private WeatherStation weatherStation;// Observer
+    WeatherPlant weatherPlant = new WeatherPlant("weatherPlant");// Observer
+    WeatherAnimal weatherAnimal = new WeatherAnimal("weatherAnimal");// Observer
+    Canvas canvas = new Canvas(1000, 750);
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
     @Override
     public void start(Stage stage) throws IOException {
-
-        // weatherData.registerObserver(this);
-        weatherData.registerObserver(Sunflower);
-        // Canvas canvas = new Canvas(900, 720);
-        // GraphicsContext gc = canvas.getGraphicsContext2D();
-        weatherStation = new WeatherStation(gc, weatherData);
         Pane root = new Pane(canvas);
         Scene scene = new Scene(root, 1000, 750); // maintain 4:3 (width to height) ratio
         GardenLayout gardenLayout = GardenLayout.getInstance();
         gardenLayout.setLayout(LayoutType.Garden.getLayoutName(), root);
-
+        weatherData.registerObserver(weatherPlant);
+        weatherStation = new WeatherStation(gc, weatherData);
         // Garden Layout
         MenuButton layoutButton = new MenuButton(gardenLayout.getLayoutName());
         layoutButton.setLayoutX(10);
@@ -85,27 +81,21 @@ public class App extends Application {
         grassButton.setLayoutY(10);
 
         grassButton.setOnAction(e -> addGrass(root));
+        // Weather
+        Button weatherButton = new Button("Choose Weather");
+        weatherButton.setLayoutX(grassButton.getLayoutX() + grassButton.getWidth() + 90);// beside the grass button
+        weatherButton.setLayoutY(10);
+        weatherButton.setOnAction(e -> showWeatherDialog());
 
         // add Buttons and get+show scene
-        root.getChildren().addAll(treeButton, flowerButton, grassButton);
+        root.getChildren().addAll(layoutButton, treeButton, flowerButton, grassButton, weatherButton);
 
         stage.setTitle("Garden");
         stage.setScene(scene);
-        stage.setMaxWidth(900);
-        stage.setMaxHeight(720);
         stage.setResizable(false);
         stage.centerOnScreen();
 
         stage.show();
-        // Add a VBox to contain buttons
-        VBox buttonContainer = new VBox(10);
-        buttonContainer.setAlignment(Pos.TOP_RIGHT);
-        root.getChildren().add(buttonContainer);
-
-        // Button to choose weather
-        Button chooseWeatherButton = new Button("Choose Weather");
-        chooseWeatherButton.setOnAction(e -> showWeatherDialog());
-        buttonContainer.getChildren().add(chooseWeatherButton);
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -128,6 +118,7 @@ public class App extends Application {
             String weather = selectedWeather.get();
             weatherData.setWeather(weather);
             weatherStation.update(weather);
+            weatherAnimal.update(weather);
         }
     }
 

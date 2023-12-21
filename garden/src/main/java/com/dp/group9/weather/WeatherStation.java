@@ -10,8 +10,8 @@ import java.util.Random;
 
 public class WeatherStation implements Observer {
 
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
+    private static final int WIDTH = 1000;
+    private static final int HEIGHT = 650;
     private static final int NUM_DROPS = 100;
 
     private List<Droplet> droplets = new ArrayList<>();
@@ -29,11 +29,6 @@ public class WeatherStation implements Observer {
         weatherData.registerObserver(this);
         initializeWeatherElements();
     }
-    // public WeatherStation(GraphicsContext gc, WeatherData weatherData) {
-    // this.gc = gc;
-    // weatherData.registerObserver(this);
-    // initializeWeatherElements();
-    // }
 
     @Override
     public void update(String weather) {
