@@ -43,13 +43,13 @@ public class WeatherPlant implements Observer {
         if (isSunnyWeather) {
             return "WeatherPlantPhoto/sunFlower.png";
         } else if (isRainyWeather) {
-            return "WeatherPlantPhoto/sunFlower.png";
+            return "WeatherPlantPhoto/rainPlant.png";
         } else if (isSnowyWeather) {
-            return "WeatherPlantPhoto/sunFlower.png";
+            return "WeatherPlantPhoto/snowPlant.png";
         } else if (isWindyWeather) {
-            return "WeatherPlantPhoto/sunFlower.png";
+            return "WeatherPlantPhoto/windPlant.png";
         } else if (isStormyWeather) {
-            return "WeatherPlantPhoto/sunFlower.png";
+            return "WeatherPlantPhoto/stormPlant.png";
         } else {
             // Default for sunny or unknown weather
             return "WeatherPlantPhoto/sunFlower.png";
@@ -74,17 +74,17 @@ public class WeatherPlant implements Observer {
             x = 200;
             y = 500;
         } else if (isRainyWeather) {
-            x = 350;
-            y = 200;
-        } else if (isSnowyWeather) {
-            x = 200;
-            y = 200;
-        } else if (isWindyWeather) {
-            x = 300;
-            y = 300;
-        } else if (isStormyWeather) {
             x = 400;
             y = 400;
+        } else if (isSnowyWeather) {
+            x = 350;
+            y = 330;
+        } else if (isWindyWeather) {
+            x = 300;
+            y = 400;
+        } else if (isStormyWeather) {
+            x = 700;
+            y = 500;
         } else {
             // Default for sunny or unknown weather
             x = 500;
@@ -95,7 +95,7 @@ public class WeatherPlant implements Observer {
         weatherPlantView.setLayoutX(x);
         weatherPlantView.setLayoutY(y);
         weatherPlantView.setFitWidth(200);
-        weatherPlantView.setFitHeight(200);
+        weatherPlantView.setFitHeight(300);
 
         // Load the appropriate image based on the weather
         String imagePath = getImagePath();
