@@ -71,7 +71,7 @@ public class WeatherPlant implements Observer {
         double x;
         double y;
         if (isSunnyWeather) {
-            x = 200;
+            x = 500;
             y = 500;
         } else if (isRainyWeather) {
             x = 400;
@@ -80,8 +80,8 @@ public class WeatherPlant implements Observer {
             x = 350;
             y = 330;
         } else if (isWindyWeather) {
-            x = 300;
-            y = 400;
+            x = 600;
+            y = 500;
         } else if (isStormyWeather) {
             x = 700;
             y = 500;

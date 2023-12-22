@@ -71,7 +71,7 @@ public class WeatherAnimal implements Observer {
         double x;
         double y;
         if (isSunnyWeather) {
-            x = 100;
+            x = 400;
             y = 500;
         } else if (isRainyWeather) {
             x = 300;
@@ -80,11 +80,11 @@ public class WeatherAnimal implements Observer {
             x = 580;
             y = 330;
         } else if (isWindyWeather) {
-            x = 100;
-            y = 400;
+            x = 400;
+            y = 500;
         } else if (isStormyWeather) {
             x = 670;
-            y = 500;
+            y = 580;
         } else {
             // Default for sunny or unknown weather
             x = 100;
