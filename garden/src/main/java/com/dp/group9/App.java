@@ -66,7 +66,7 @@ public class App extends Application {
         weatherStation = new WeatherStation(gc, weatherData);
         // Add Playground
         addPlayground(gardenLayout.getLayoutName(), root);
-        // root.getChildren().add(canvas);
+
         // Garden Layout
         MenuButton layoutButton = new MenuButton(gardenLayout.getLayoutName());
         layoutButton.setLayoutX(10);
