@@ -46,12 +46,19 @@ public class App extends Application {
 
     WeatherPlant weatherPlant = new WeatherPlant("weatherPlant");// Observer
     WeatherAnimal weatherAnimal = new WeatherAnimal("weatherAnimal");// Observer
-    Canvas canvas = new Canvas(1000, 750);
-    GraphicsContext gc = canvas.getGraphicsContext2D();
+    private Canvas canvas;
+    private GraphicsContext gc;
+
     private String lastSelectedWeather = "No Weather Selected";
 
     @Override
     public void start(Stage stage) throws IOException {
+        canvas = new Canvas(1000, 750);
+        gc = canvas.getGraphicsContext2D();
+
+        canvas = new Canvas(1000, 750);
+        gc = canvas.getGraphicsContext2D();
+
         Pane root = new Pane(canvas);
         Scene scene = new Scene(root, 1000, 750); // maintain 4:3 (width to height) ratio
         GardenLayout gardenLayout = GardenLayout.getInstance();
@@ -59,7 +66,6 @@ public class App extends Application {
         weatherData.registerObserver(weatherPlant);
         weatherData.registerObserver(weatherAnimal);
         weatherStation = new WeatherStation(gc, weatherData);
-
         // Add Playground
         addPlayground(gardenLayout.getLayoutName(), root);
 
@@ -70,10 +76,13 @@ public class App extends Application {
         layoutButton.setPrefWidth(130);
         for (LayoutType type : LayoutType.values()) {
             MenuItem menuItem = new MenuItem(type.getLayoutName());
+
             menuItem.setOnAction(e -> {
                 gardenLayout.setLayout(type.getLayoutName(), root);
                 layoutButton.setText(type.getLayoutName());
-                root.getChildren().removeIf((node) -> !(node instanceof Button || node instanceof MenuButton));
+                // remove all children except canvas and gc
+                root.getChildren().removeIf(
+                        (node) -> !(node instanceof Button || node instanceof MenuButton || node instanceof Canvas));
                 addPlayground(type.getLayoutName(), root);
                 root.getChildren().add(animalChoiceBox);
                 root.getChildren().addAll(bird.getImageView(), butterfly.getImageView(),
