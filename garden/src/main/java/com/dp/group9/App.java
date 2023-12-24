@@ -83,9 +83,6 @@ public class App extends Application {
                 // remove all children except canvas and gc
                 root.getChildren().removeIf(
                         (node) -> !(node instanceof Button || node instanceof MenuButton || node instanceof Canvas));
-                // remove all children except canvas and gc
-                root.getChildren().removeIf(
-                        (node) -> !(node instanceof Button || node instanceof MenuButton || node instanceof Canvas));
                 addPlayground(type.getLayoutName(), root);
                 root.getChildren().add(animalChoiceBox);
                 root.getChildren().addAll(bird.getImageView(), butterfly.getImageView(),
