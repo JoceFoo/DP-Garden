@@ -48,12 +48,7 @@ public class App extends Application {
     WeatherAnimal weatherAnimal = new WeatherAnimal("weatherAnimal");// Observer
     private Canvas canvas;
     private GraphicsContext gc;
-    // Canvas canvas = new Canvas(1000, 750);
-    // GraphicsContext gc = canvas.getGraphicsContext2D();
-    private Canvas canvas;
-    private GraphicsContext gc;
-    // Canvas canvas = new Canvas(1000, 750);
-    // GraphicsContext gc = canvas.getGraphicsContext2D();
+
     private String lastSelectedWeather = "No Weather Selected";
 
     @Override
