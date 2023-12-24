@@ -2,15 +2,18 @@ package com.dp.group9;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,6 +34,12 @@ import javafx.scene.control.Alert.AlertType;
  * Virtual Space: Garden
  */
 public class App extends Application {
+
+    private VBox animalChoiceBox;
+    private Animal bird;
+    private Animal butterfly;
+    private Animal snail;
+    private Animal frog;
 
     private WeatherData weatherData = new WeatherData();// Subject
     private WeatherStation weatherStation;// Observer
@@ -66,6 +75,11 @@ public class App extends Application {
                 layoutButton.setText(type.getLayoutName());
                 root.getChildren().removeIf((node) -> !(node instanceof Button || node instanceof MenuButton));
                 addPlayground(type.getLayoutName(), root);
+                root.getChildren().add(animalChoiceBox);
+                root.getChildren().addAll(bird.getImageView(), butterfly.getImageView(),
+                        snail.getImageView(),
+                        frog.getImageView());
+                root.getChildren().addAll(weatherPlant.getWeatherPlantView(), weatherAnimal.getWeatherAnimalView());
             });
             layoutButton.getItems().add(menuItem);
         }
@@ -89,9 +103,74 @@ public class App extends Application {
         grassButton.setLayoutX(flowerButton.getLayoutX() + flowerButton.getWidth() + 90);// beside the flower button
         grassButton.setLayoutY(10);
         grassButton.setOnAction(e -> addGrass(root));
+
+        // Create Animal logic
+        animalChoiceBox = new VBox();
+        animalChoiceBox.setLayoutX(grassButton.getLayoutX() + grassButton.getWidth() + 80);
+        animalChoiceBox.setLayoutY(0);
+
+        ComboBox<String> animalComboBox = new ComboBox<>(
+                FXCollections.observableArrayList("Bird", "Butterfly", "Snail", "Frog"));
+        animalComboBox.setValue("Choose Animal");
+        animalComboBox.setOnAction(event -> handleAnimalSelection(animalComboBox));
+        // animalComboBox.setOnAction(event -> handleAnimalSelection(animalComboBox,
+        // root, scene));
+
+        VBox.setMargin(animalComboBox, new javafx.geometry.Insets(10));
+        animalChoiceBox.getChildren().add(animalComboBox);
+
+        root.getChildren().add(animalChoiceBox);
+
+        // Add Bird
+        AnimalFactory birdFactory = new BirdFactory();
+        bird = birdFactory.createAnimal();
+
+        bird.getImageView().setVisible(false);
+        bird.getImageView().setTranslateX(15);
+        bird.getImageView().setTranslateY(50);
+
+        bird.display();
+        bird.setupMouseHandlers();
+
+        // Add Butterfly
+        AnimalFactory butterflyFactory = new ButterflyFactory();
+        butterfly = butterflyFactory.createAnimal();
+
+        butterfly.getImageView().setVisible(false);
+        butterfly.getImageView().setTranslateX(scene.getWidth() - 250); // 750
+        butterfly.getImageView().setTranslateY(scene.getHeight() / 2 - 30); // 320
+
+        butterfly.display();
+        butterfly.setupMouseHandlers();
+
+        // Add Snail
+        AnimalFactory snailFactory = new SnailFactory();
+        snail = snailFactory.createAnimal();
+
+        snail.getImageView().setVisible(false);
+        snail.getImageView().setTranslateX(350);
+        snail.getImageView().setTranslateY(600);
+
+        snail.display();
+        snail.setupMouseHandlers();
+
+        // Add Snail
+        AnimalFactory frogFactory = new FrogFactory();
+        frog = frogFactory.createAnimal();
+
+        frog.getImageView().setVisible(false);
+        frog.getImageView().setTranslateX(scene.getWidth() / 2 - 25);
+        frog.getImageView().setTranslateY(scene.getHeight() / 2 + 150);
+
+        frog.display();
+        frog.setupMouseHandlers();
+
+        root.getChildren().addAll(bird.getImageView(), butterfly.getImageView(), snail.getImageView(),
+                frog.getImageView());
+
         // Weather
         Button weatherButton = new Button("Choose Weather");
-        weatherButton.setLayoutX(grassButton.getLayoutX() + grassButton.getWidth() + 90);// beside the grass button
+        weatherButton.setLayoutX(grassButton.getLayoutX() + grassButton.getWidth() + 230);// beside the grass button
         weatherButton.setLayoutY(10);
         weatherButton.setOnAction(e -> showWeatherDialog());
 
@@ -217,6 +296,22 @@ public class App extends Application {
         grass.getView().setLayoutY(pane.getHeight() - grass.getView().getFitHeight());
 
         grass.display();
+    }
+
+    private void handleAnimalSelection(ComboBox<String> animalComboBox) {
+        String selectedAnimal = animalComboBox.getValue();
+        if (selectedAnimal != null) {
+            // Toggle the visibility of the selected animal image
+            if ("Bird".equals(selectedAnimal)) {
+                bird.getImageView().setVisible(!bird.getImageView().isVisible());
+            } else if ("Butterfly".equals(selectedAnimal)) {
+                butterfly.getImageView().setVisible(!butterfly.getImageView().isVisible());
+            } else if ("Snail".equals(selectedAnimal)) {
+                snail.getImageView().setVisible(!snail.getImageView().isVisible());
+            } else if ("Frog".equals(selectedAnimal)) {
+                frog.getImageView().setVisible(!frog.getImageView().isVisible());
+            }
+        }
     }
 
     public static void main(String[] args) {
