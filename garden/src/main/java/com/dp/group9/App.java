@@ -50,10 +50,17 @@ public class App extends Application {
     private GraphicsContext gc;
     // Canvas canvas = new Canvas(1000, 750);
     // GraphicsContext gc = canvas.getGraphicsContext2D();
+    private Canvas canvas;
+    private GraphicsContext gc;
+    // Canvas canvas = new Canvas(1000, 750);
+    // GraphicsContext gc = canvas.getGraphicsContext2D();
     private String lastSelectedWeather = "No Weather Selected";
 
     @Override
     public void start(Stage stage) throws IOException {
+        canvas = new Canvas(1000, 750);
+        gc = canvas.getGraphicsContext2D();
+
         canvas = new Canvas(1000, 750);
         gc = canvas.getGraphicsContext2D();
 
@@ -78,6 +85,9 @@ public class App extends Application {
             menuItem.setOnAction(e -> {
                 gardenLayout.setLayout(type.getLayoutName(), root);
                 layoutButton.setText(type.getLayoutName());
+                // remove all children except canvas and gc
+                root.getChildren().removeIf(
+                        (node) -> !(node instanceof Button || node instanceof MenuButton || node instanceof Canvas));
                 // remove all children except canvas and gc
                 root.getChildren().removeIf(
                         (node) -> !(node instanceof Button || node instanceof MenuButton || node instanceof Canvas));
