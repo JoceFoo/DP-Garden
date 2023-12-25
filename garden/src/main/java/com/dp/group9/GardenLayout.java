@@ -39,7 +39,7 @@ public class GardenLayout {
   private BackgroundImage loadImage(String filename) {
     BackgroundImage background = null;
     try {
-      Image image = new Image(ClassLoader.getSystemResourceAsStream(filename + ".jpg"));
+      Image image = new Image(ClassLoader.getSystemResourceAsStream(filename));
       BackgroundSize backgroundSize = new BackgroundSize(image.getWidth(), image.getHeight(), true, true, true, true);
       background = new BackgroundImage(image,
           BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
