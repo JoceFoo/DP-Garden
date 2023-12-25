@@ -1,8 +1,5 @@
 package com.dp.group9;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -14,7 +11,6 @@ import javafx.scene.layout.Pane;
 public class GardenLayout {
   private static GardenLayout instance = new GardenLayout();
   private String layoutName;
-  
   private BackgroundImage backgroundImage;
 
   public static GardenLayout getInstance() {
