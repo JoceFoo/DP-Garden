@@ -9,7 +9,7 @@ public enum LayoutType {
   private String layoutName;
   private String imageName;
 
-  LayoutType(String layoutName, String imageName) {
+  private LayoutType(String layoutName, String imageName) {
     this.layoutName = layoutName;
     this.imageName = imageName;
   }

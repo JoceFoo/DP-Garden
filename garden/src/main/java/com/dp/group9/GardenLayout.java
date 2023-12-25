@@ -13,6 +13,8 @@ public class GardenLayout {
   private String layoutName;
   private BackgroundImage backgroundImage;
 
+  private GardenLayout() {}
+
   public static GardenLayout getInstance() {
     return instance;
   }
