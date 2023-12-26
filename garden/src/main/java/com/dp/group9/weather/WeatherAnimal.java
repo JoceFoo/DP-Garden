@@ -83,8 +83,8 @@ public class WeatherAnimal implements Observer {
             x = 400;
             y = 500;
         } else if (isStormyWeather) {
-            x = 670;
-            y = 580;
+            x = 530;
+            y = 330;
         } else {
             // Default for sunny or unknown weather
             x = 100;

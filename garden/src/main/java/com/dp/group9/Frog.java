@@ -15,6 +15,7 @@ public class Frog implements Animal {
 
     private boolean isFrogAnimationInProgress = false;
     private ImageView frogImageView;
+    private int jumpCount = 0;
 
     @Override
     public ImageView getImageView() {
@@ -71,21 +72,27 @@ public class Frog implements Animal {
         isFrogAnimationInProgress = true;
 
         // Create a TranslateTransition for the frog jump animation
-        TranslateTransition jumpUp = new TranslateTransition(Duration.seconds(0.5),
-                imageView);
+        TranslateTransition jumpUp = new TranslateTransition(Duration.seconds(0.5), imageView);
         jumpUp.setByY(-50); // Adjust the jump height as needed
 
         // Create a second TranslateTransition for coming back down
-        TranslateTransition jumpDown = new TranslateTransition(Duration.seconds(0.5),
-                imageView);
+        TranslateTransition jumpDown = new TranslateTransition(Duration.seconds(0.5), imageView);
         jumpDown.setByY(50); // Adjust the jump height as needed
 
         // Set event handlers for each transition to make it continuous
         jumpUp.setOnFinished(event -> jumpDown.play());
         jumpDown.setOnFinished(event -> {
-            // Frog animation is complete, set the flag back to false
-            isFrogAnimationInProgress = false;
-            jumpUp.play();
+            jumpCount++;
+
+            // Check if the desired number of cycles is reached
+            if (jumpCount < 3) {
+                // Continue the animation
+                jumpUp.play();
+            } else {
+                // Reset the jump count and stop the animation
+                jumpCount = 0;
+                isFrogAnimationInProgress = false;
+            }
         });
 
         // Start the first jump animation

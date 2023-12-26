@@ -91,29 +91,9 @@ public class App extends Application {
             layoutButton.getItems().add(menuItem);
         }
 
-        // Tree
-        Button treeButton = new Button("Add Tree");
-        treeButton.setLayoutX(layoutButton.getLayoutX() + layoutButton.getWidth() + 140); // beside the layout button
-        treeButton.setLayoutY(10);
-
-        treeButton.setOnAction(e -> addTree(root));
-
-        // Flower
-        Button flowerButton = new Button("Add Flower");
-        flowerButton.setLayoutX(treeButton.getLayoutX() + treeButton.getWidth() + 80); // beside the tree button
-        flowerButton.setLayoutY(10);
-
-        flowerButton.setOnAction(e -> addFlower(root));
-
-        // Grass
-        Button grassButton = new Button("Add Grass");
-        grassButton.setLayoutX(flowerButton.getLayoutX() + flowerButton.getWidth() + 90);// beside the flower button
-        grassButton.setLayoutY(10);
-        grassButton.setOnAction(e -> addGrass(root));
-
         // Create Animal logic
         animalChoiceBox = new VBox();
-        animalChoiceBox.setLayoutX(grassButton.getLayoutX() + grassButton.getWidth() + 80);
+        animalChoiceBox.setLayoutX(layoutButton.getLayoutX() + layoutButton.getWidth() + 140);
         animalChoiceBox.setLayoutY(0);
 
         ComboBox<String> animalComboBox = new ComboBox<>(
@@ -127,6 +107,27 @@ public class App extends Application {
         animalChoiceBox.getChildren().add(animalComboBox);
 
         root.getChildren().add(animalChoiceBox);
+
+        // Tree
+        Button treeButton = new Button("Add Tree");
+        treeButton.setLayoutX(animalChoiceBox.getLayoutX() + animalChoiceBox.getWidth() + 150); // beside the layout
+                                                                                                // button
+        treeButton.setLayoutY(10);
+
+        treeButton.setOnAction(e -> addTree(gardenLayout.getLayoutName(), root));
+
+        // Flower
+        Button flowerButton = new Button("Add Flower");
+        flowerButton.setLayoutX(treeButton.getLayoutX() + treeButton.getWidth() + 85); // beside the tree button
+        flowerButton.setLayoutY(10);
+
+        flowerButton.setOnAction(e -> addFlower(root));
+
+        // Grass
+        Button grassButton = new Button("Add Grass");
+        grassButton.setLayoutX(flowerButton.getLayoutX() + flowerButton.getWidth() + 95);// beside the flower button
+        grassButton.setLayoutY(10);
+        grassButton.setOnAction(e -> addGrass(root));
 
         // Add Bird
         AnimalFactory birdFactory = new BirdFactory();
@@ -167,7 +168,7 @@ public class App extends Application {
 
         frog.getImageView().setVisible(false);
         frog.getImageView().setTranslateX(scene.getWidth() / 2 - 25);
-        frog.getImageView().setTranslateY(scene.getHeight() / 2 + 150);
+        frog.getImageView().setTranslateY(scene.getHeight() / 2 + 80);
 
         frog.display();
         frog.setupMouseHandlers();
@@ -177,7 +178,7 @@ public class App extends Application {
 
         // Weather
         Button weatherButton = new Button("Choose Weather");
-        weatherButton.setLayoutX(grassButton.getLayoutX() + grassButton.getWidth() + 230);// beside the grass button
+        weatherButton.setLayoutX(grassButton.getLayoutX() + grassButton.getWidth() + 90);// beside the grass button
         weatherButton.setLayoutY(10);
         weatherButton.setOnAction(e -> showWeatherDialog());
 
@@ -203,8 +204,7 @@ public class App extends Application {
     }
 
     private void showWeatherDialog() {
-        ChoiceDialog<String> weatherDialog = new ChoiceDialog<>(lastSelectedWeather, "Sunny", "Rainy", "Snowy", "Windy",
-                "Stormy");
+        ChoiceDialog<String> weatherDialog = new ChoiceDialog<>(lastSelectedWeather, "Sunny", "Rainy", "Snowy", "Windy", "Stormy");
         weatherDialog.setTitle("Select Weather");
         weatherDialog.setHeaderText(null);
         weatherDialog.setContentText("Choose the current weather:");
@@ -256,23 +256,37 @@ public class App extends Application {
         playground.display();
     }
 
-    private void addTree(Pane pane) {
+    private void addTree(String layoutType, Pane pane) {
         Random random = new Random();
 
         Plant plant = new SimplePlant();
         Tree tree = new Tree(plant, pane);
         double start = pane.getWidth() / 3;
         double end = 2 * start;
+        double randomX = 0.00;
+        int minY = 0;
+        int maxY = 10;
 
-        double randomX;
-        if (random.nextBoolean()) {
-            randomX = random.nextDouble() * (start - tree.getView().getFitWidth() - 600);
-        } else {
-            randomX = end + random.nextDouble() * (start - tree.getView().getFitWidth() / 2);
+        if (layoutType.equals(LayoutType.GARDEN.getLayoutName()) || layoutType.equals(LayoutType.MOUNTAIN_VIEW.getLayoutName())) {
+            if (random.nextBoolean()) {
+                randomX = random.nextDouble() * (start - tree.getView().getFitWidth()) - 250;
+            } else {
+                randomX = end + random.nextDouble() * (start - tree.getView().getFitWidth() / 2) + 65;
+            }
+
+            minY = 110;
+            maxY = 130;
+        } else if (layoutType.equals(LayoutType.OFF_THE_CITY.getLayoutName()) || layoutType.equals(LayoutType.HILLSIDE.getLayoutName())) {
+            if (random.nextBoolean()) {
+                randomX = random.nextDouble() * (start - tree.getView().getFitWidth() - 400);
+            } else {
+                randomX = end + random.nextDouble() * (start - tree.getView().getFitWidth() / 2);
+            }
+
+            minY = 60;
+            maxY = 65;
         }
 
-        int minY = 150;
-        int maxY = 200;
         int randomY = random.nextInt(maxY - minY) + minY;
 
         tree.getView().setLayoutX(randomX);
