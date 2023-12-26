@@ -70,21 +70,15 @@ public class WeatherPlant implements Observer {
         // Define the position where you want to place the Plant based on the weather
         double x;
         double y;
-        if (isSunnyWeather) {
-            x = 500;
-            y = 500;
-        } else if (isRainyWeather) {
-            x = 400;
-            y = 400;
-        } else if (isSnowyWeather) {
-            x = 350;
-            y = 330;
-        } else if (isWindyWeather) {
-            x = 600;
-            y = 500;
-        } else if (isStormyWeather) {
+        if (isSunnyWeather && isRainyWeather && isSnowyWeather && isWindyWeather) {
             x = 700;
-            y = 500;
+            y = 450;
+        } else if (isSnowyWeather) {
+            x = 440;
+            y = 480;
+        } else if (isStormyWeather) {
+            x = 550;
+            y = 200;
         } else {
             // Default for sunny or unknown weather
             x = 500;
