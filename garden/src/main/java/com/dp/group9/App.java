@@ -3,7 +3,6 @@ package com.dp.group9;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -17,7 +16,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -62,7 +60,7 @@ public class App extends Application {
         Pane root = new Pane(canvas);
         Scene scene = new Scene(root, 1000, 750); // maintain 4:3 (width to height) ratio
         GardenLayout gardenLayout = GardenLayout.getInstance();
-        gardenLayout.setLayout(LayoutType.Garden.getLayoutName(), root);
+        gardenLayout.setLayout(LayoutType.GARDEN.getLayoutName(), root);
         weatherData.registerObserver(weatherPlant);
         weatherData.registerObserver(weatherAnimal);
         weatherStation = new WeatherStation(gc, weatherData);
@@ -234,22 +232,22 @@ public class App extends Application {
 
     private void addPlayground(String layoutType, Pane root) {
         Playground playground = new Playground();
-        if (layoutType.equals(LayoutType.Garden.getLayoutName())) {
+        if (layoutType.equals(LayoutType.GARDEN.getLayoutName())) {
             // garden facilities
             Slide slide = new Slide(root, 80, 350);
             Seesaw seesaw = new Seesaw(root, 550, 270);
             playground.addFacilities(slide, seesaw);
-        } else if (layoutType.equals(LayoutType.Hillside.getLayoutName())) {
+        } else if (layoutType.equals(LayoutType.HILLSIDE.getLayoutName())) {
             // hillside facilities
             Swing swing = new Swing(root, 700, 320);
             RopeNetClimbing ropeNetClimbing = new RopeNetClimbing(root, 80, 500);
             playground.addFacilities(swing, ropeNetClimbing);
-        } else if (layoutType.equals(LayoutType.OffTheCity.getLayoutName())) {
+        } else if (layoutType.equals(LayoutType.OFF_THE_CITY.getLayoutName())) {
             // off the city facilities
             ClimbingWalls climbingWalls = new ClimbingWalls(root, 580, 410);
             JungleGym jungleGym = new JungleGym(root, 250, 370);
             playground.addFacilities(climbingWalls, jungleGym);
-        } else if (layoutType.equals(LayoutType.MountainView.getLayoutName())) {
+        } else if (layoutType.equals(LayoutType.MOUNTAIN_VIEW.getLayoutName())) {
             // mountain facilities
             MonkeyBars monkeyBars = new MonkeyBars(root, 70, 380);
             RopeBridge ropeBridge = new RopeBridge(root, 680, 300);

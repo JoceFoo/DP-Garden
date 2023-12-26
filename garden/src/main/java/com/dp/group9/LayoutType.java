@@ -1,15 +1,15 @@
 package com.dp.group9;
 
 public enum LayoutType {
-  Garden("Garden", "layout1"),
-  MountainView("Mountain view", "layout2"),
-  OffTheCity("Off the city", "layout3"),
-  Hillside("Hillside", "layout4");
+  GARDEN("Garden", "layout1.jpg"),
+  MOUNTAIN_VIEW("Mountain view", "layout2.jpg"),
+  OFF_THE_CITY("Off the city", "layout3.jpg"),
+  HILLSIDE("Hillside", "layout4.jpg");
 
   private String layoutName;
   private String imageName;
 
-  LayoutType(String layoutName, String imageName) {
+  private LayoutType(String layoutName, String imageName) {
     this.layoutName = layoutName;
     this.imageName = imageName;
   }
