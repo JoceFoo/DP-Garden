@@ -100,8 +100,6 @@ public class App extends Application {
                 FXCollections.observableArrayList("Bird", "Butterfly", "Snail", "Frog"));
         animalComboBox.setValue("Choose Animal");
         animalComboBox.setOnAction(event -> handleAnimalSelection(animalComboBox));
-        // animalComboBox.setOnAction(event -> handleAnimalSelection(animalComboBox,
-        // root, scene));
 
         VBox.setMargin(animalComboBox, new javafx.geometry.Insets(10));
         animalChoiceBox.getChildren().add(animalComboBox);
@@ -110,7 +108,7 @@ public class App extends Application {
 
         // Tree
         Button treeButton = new Button("Add Tree");
-        treeButton.setLayoutX(animalChoiceBox.getLayoutX() + animalChoiceBox.getWidth() + 150); // beside the layout
+        treeButton.setLayoutX(animalChoiceBox.getLayoutX() + animalChoiceBox.getWidth() + 150); // beside the animal
                                                                                                 // button
         treeButton.setLayoutY(10);
 
@@ -204,7 +202,8 @@ public class App extends Application {
     }
 
     private void showWeatherDialog() {
-        ChoiceDialog<String> weatherDialog = new ChoiceDialog<>(lastSelectedWeather, "Sunny", "Rainy", "Snowy", "Windy", "Stormy");
+        ChoiceDialog<String> weatherDialog = new ChoiceDialog<>(lastSelectedWeather, "Sunny", "Rainy", "Snowy", "Windy",
+                "Stormy");
         weatherDialog.setTitle("Select Weather");
         weatherDialog.setHeaderText(null);
         weatherDialog.setContentText("Choose the current weather:");
@@ -267,7 +266,8 @@ public class App extends Application {
         int minY = 0;
         int maxY = 10;
 
-        if (layoutType.equals(LayoutType.GARDEN.getLayoutName()) || layoutType.equals(LayoutType.MOUNTAIN_VIEW.getLayoutName())) {
+        if (layoutType.equals(LayoutType.GARDEN.getLayoutName())
+                || layoutType.equals(LayoutType.MOUNTAIN_VIEW.getLayoutName())) {
             if (random.nextBoolean()) {
                 randomX = random.nextDouble() * (start - tree.getView().getFitWidth()) - 250;
             } else {
@@ -276,7 +276,8 @@ public class App extends Application {
 
             minY = 110;
             maxY = 130;
-        } else if (layoutType.equals(LayoutType.OFF_THE_CITY.getLayoutName()) || layoutType.equals(LayoutType.HILLSIDE.getLayoutName())) {
+        } else if (layoutType.equals(LayoutType.OFF_THE_CITY.getLayoutName())
+                || layoutType.equals(LayoutType.HILLSIDE.getLayoutName())) {
             if (random.nextBoolean()) {
                 randomX = random.nextDouble() * (start - tree.getView().getFitWidth() - 400);
             } else {

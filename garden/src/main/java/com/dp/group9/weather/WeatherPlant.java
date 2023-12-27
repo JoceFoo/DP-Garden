@@ -11,8 +11,6 @@ public class WeatherPlant implements Observer {
     private boolean isSnowyWeather;
     private boolean isWindyWeather;
     private boolean isStormyWeather;
-    // Add a default image path
-    private static final String DEFAULT_IMAGE_PATH = "WeatherPlantPhoto/sunFlower.png";
 
     public WeatherPlant(String weatherPlantName) {
         this.weatherPlantName = weatherPlantName;

@@ -11,13 +11,10 @@ public class WeatherAnimal implements Observer {
     private boolean isSnowyWeather;
     private boolean isWindyWeather;
     private boolean isStormyWeather;
-    // Add a default image path
-    private static final String DEFAULT_IMAGE_PATH = "WeatherAnimalPhoto/sunnyDog.png";
 
     public WeatherAnimal(String weatherAnimalName) {
         this.weatherAnimalName = weatherAnimalName;
         this.weatherAnimalView = new ImageView();
-        // setDefaultImage();
     }
 
     public ImageView getWeatherAnimalView() {

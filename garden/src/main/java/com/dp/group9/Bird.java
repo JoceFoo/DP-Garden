@@ -53,52 +53,44 @@ public class Bird implements Animal {
         // Create a timeline for complex animations
         Timeline timeline = new Timeline();
 
-        // Get the width of the scene
         double sceneWidth = 700;
 
-        // Define a fixed ratio for the animation duration
-        double animationDurationRatio = 0.0030; // Adjust the ratio as needed
+        double animationDurationRatio = 0.0030;
 
         // Calculate the animation duration based on the scene width and the fixed ratio
         double animationDuration = sceneWidth * animationDurationRatio;
 
-        // Add translation animation to the right
+        // Move back to the right
         KeyValue translateXValueRight = new KeyValue(imageView.translateXProperty(), 950);
         KeyFrame translateKeyFrameRight = new KeyFrame(Duration.seconds(animationDuration), translateXValueRight);
 
-        // Add an event handler to flip the image when it reaches the right edge
+        // Flip the image when it reaches the right edge
         EventHandler<ActionEvent> flipHandler = event -> {
-            imageView.setScaleX(-1); // Flip the image
+            imageView.setScaleX(-1);
         };
         KeyFrame flipKeyFrame = new KeyFrame(Duration.seconds(animationDuration), flipHandler);
 
-        // Add translation animation back to the left
+        // Move back to the left
         KeyValue translateXValueLeft = new KeyValue(imageView.translateXProperty(), 15);
         KeyFrame translateKeyFrameLeft = new KeyFrame(Duration.seconds(animationDuration * 2), translateXValueLeft);
 
-        // Add an event handler to flip the image when it reaches the left edge
+        // Flip the image again
         EventHandler<ActionEvent> flipBackHandler = event -> {
-            imageView.setScaleX(1); // Flip the image back to its original position
-            // Bird animation is complete, set the flag back to false
+            imageView.setScaleX(1);
             isBirdAnimationInProgress = false;
         };
         KeyFrame flipBackKeyFrame = new KeyFrame(Duration.seconds(animationDuration * 2), flipBackHandler);
 
-        // Add all keyframes to the timeline
         timeline.getKeyFrames().addAll(
                 translateKeyFrameRight,
                 flipKeyFrame,
                 translateKeyFrameLeft,
                 flipBackKeyFrame);
 
-        // Set the cycle count (how many times the animation should repeat)
         timeline.setCycleCount(1);
 
-        // Play the animation
         timeline.play();
 
-        // Play the sound after the animation is triggered
-        // playBirdSound();
     }
 
     @Override
@@ -108,20 +100,18 @@ public class Bird implements Animal {
         getImageView().setOnMouseClicked(this::handleMouseClicked);
     }
 
+    // Set the cursor to indicate that the bird is clickable
     private void handleMouseEntered(MouseEvent event) {
-        // Set the cursor to indicate that the bird is clickable
         ImageView sourceImageView = (ImageView) event.getSource();
         sourceImageView.setCursor(Cursor.HAND);
     }
 
     private void handleMouseExited(MouseEvent event) {
-        // Set the default cursor when not hovering over the bird
         ImageView sourceImageView = (ImageView) event.getSource();
         sourceImageView.setCursor(Cursor.DEFAULT);
     }
 
     private void handleMouseClicked(MouseEvent event) {
-        // Perform a complex animation when the bird is clicked
         animate(getImageView());
     }
 

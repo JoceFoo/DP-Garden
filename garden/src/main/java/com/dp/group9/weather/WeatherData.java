@@ -38,10 +38,6 @@ public class WeatherData implements Subject {
         }
     }
 
-    public void measurementsChanged() {
-        notifyObservers();
-    }
-
     public String getWeather() {
         return weather;
     }
