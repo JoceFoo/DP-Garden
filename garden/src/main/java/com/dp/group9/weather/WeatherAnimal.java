@@ -42,7 +42,7 @@ public class WeatherAnimal implements Observer {
         } else if (isRainyWeather) {
             return "WeatherAnimalPhoto/rainyCat.png";
         } else if (isSnowyWeather) {
-            return "WeatherAnimalPhoto/snowyPenguin.png";
+            return "WeatherAnimalPhoto/snowyDeer.png";
         } else if (isWindyWeather) {
             return "WeatherAnimalPhoto/windyPooh.png";
         } else if (isStormyWeather) {
@@ -74,7 +74,7 @@ public class WeatherAnimal implements Observer {
             x = 300;
             y = 400;
         } else if (isSnowyWeather) {
-            x = 580;
+            x = 550;
             y = 330;
         } else if (isWindyWeather) {
             x = 400;
