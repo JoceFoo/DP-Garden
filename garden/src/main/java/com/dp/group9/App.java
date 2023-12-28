@@ -265,7 +265,7 @@ public class App extends Application {
             playground.addFacilities(swing, ropeNetClimbing);
         } else if (layoutType.equals(LayoutType.OFF_THE_CITY.getLayoutName())) {
             // off the city facilities
-            ClimbingWalls climbingWalls = new ClimbingWalls(root, 580, 410);
+            ClimbingWalls climbingWalls = new ClimbingWalls(root, 540, 480);
             JungleGym jungleGym = new JungleGym(root, 250, 370);
             playground.addFacilities(climbingWalls, jungleGym);
         } else if (layoutType.equals(LayoutType.MOUNTAIN_VIEW.getLayoutName())) {

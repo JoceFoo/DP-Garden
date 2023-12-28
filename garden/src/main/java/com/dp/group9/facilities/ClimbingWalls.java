@@ -13,8 +13,8 @@ public class ClimbingWalls extends Facility{
         this.pane = pane;
         Image climbingWalls = new Image(getClass().getResourceAsStream("/ClimbingWalls.png"));
         climbingWallsView = new ImageView(climbingWalls);
-        climbingWallsView.setFitHeight(400);
-        climbingWallsView.setFitWidth(420);
+        climbingWallsView.setFitHeight(300);
+        climbingWallsView.setFitWidth(390);
 
         climbingWallsView.setLayoutX(x);
         climbingWallsView.setLayoutY(y);
