@@ -19,6 +19,28 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.Random;
 
+import com.dp.group9.animals.Animal;
+import com.dp.group9.animals.AnimalFactory;
+import com.dp.group9.animals.BirdFactory;
+import com.dp.group9.animals.ButterflyFactory;
+import com.dp.group9.animals.FrogFactory;
+import com.dp.group9.animals.SnailFactory;
+import com.dp.group9.facilities.ClimbingWalls;
+import com.dp.group9.facilities.JungleGym;
+import com.dp.group9.facilities.MonkeyBars;
+import com.dp.group9.facilities.Playground;
+import com.dp.group9.facilities.RopeBridge;
+import com.dp.group9.facilities.RopeNetClimbing;
+import com.dp.group9.facilities.Seesaw;
+import com.dp.group9.facilities.Slide;
+import com.dp.group9.facilities.Swing;
+import com.dp.group9.layouts.GardenLayout;
+import com.dp.group9.layouts.LayoutType;
+import com.dp.group9.layouts.plants.Flower;
+import com.dp.group9.layouts.plants.Grass;
+import com.dp.group9.layouts.plants.Plant;
+import com.dp.group9.layouts.plants.SimplePlant;
+import com.dp.group9.layouts.plants.Tree;
 import com.dp.group9.weather.WeatherAnimal;
 import com.dp.group9.weather.WeatherData;
 import com.dp.group9.weather.WeatherPlant;
@@ -243,7 +265,7 @@ public class App extends Application {
             playground.addFacilities(swing, ropeNetClimbing);
         } else if (layoutType.equals(LayoutType.OFF_THE_CITY.getLayoutName())) {
             // off the city facilities
-            ClimbingWalls climbingWalls = new ClimbingWalls(root, 580, 410);
+            ClimbingWalls climbingWalls = new ClimbingWalls(root, 540, 480);
             JungleGym jungleGym = new JungleGym(root, 250, 370);
             playground.addFacilities(climbingWalls, jungleGym);
         } else if (layoutType.equals(LayoutType.MOUNTAIN_VIEW.getLayoutName())) {

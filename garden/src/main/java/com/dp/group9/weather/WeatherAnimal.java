@@ -42,7 +42,7 @@ public class WeatherAnimal implements Observer {
         } else if (isRainyWeather) {
             return "WeatherAnimalPhoto/rainyCat.png";
         } else if (isSnowyWeather) {
-            return "WeatherAnimalPhoto/snowyPenguin.png";
+            return "WeatherAnimalPhoto/snowyDeer.png";
         } else if (isWindyWeather) {
             return "WeatherAnimalPhoto/windyPooh.png";
         } else if (isStormyWeather) {
@@ -67,6 +67,8 @@ public class WeatherAnimal implements Observer {
         // Define the position where you want to place the animal based on the weather
         double x;
         double y;
+        double width = 200;
+        double height = 200;
         if (isSunnyWeather) {
             x = 400;
             y = 500;
@@ -74,14 +76,18 @@ public class WeatherAnimal implements Observer {
             x = 300;
             y = 400;
         } else if (isSnowyWeather) {
-            x = 580;
+            x = 550;
             y = 330;
+            width = 180;
+            height = 180;
         } else if (isWindyWeather) {
             x = 400;
             y = 500;
         } else if (isStormyWeather) {
             x = 530;
-            y = 330;
+            y = 350;
+            width = 180;
+            height = 180;
         } else {
             // Default for sunny or unknown weather
             x = 100;
@@ -91,8 +97,8 @@ public class WeatherAnimal implements Observer {
         // Set the position of the animal
         weatherAnimalView.setLayoutX(x);
         weatherAnimalView.setLayoutY(y);
-        weatherAnimalView.setFitWidth(200);
-        weatherAnimalView.setFitHeight(200);
+        weatherAnimalView.setFitWidth(width);
+        weatherAnimalView.setFitHeight(height);
 
         // Load the appropriate image based on the weather
         String imagePath = getImagePath();
