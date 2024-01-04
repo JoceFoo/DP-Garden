@@ -1,4 +1,4 @@
-package com.dp.group9.layouts.plants;
+package com.dp.group9.plants;
 
 import javafx.scene.image.ImageView;
 
