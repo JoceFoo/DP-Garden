@@ -64,7 +64,7 @@ public class App extends Application {
 
     private WeatherData weatherData = new WeatherData();// Subject
     private WeatherStation weatherStation;// Observer
-
+    private AnimationTimer animationTimer;
     WeatherPlant weatherPlant = new WeatherPlant("weatherPlant", weatherData);// Observer
     WeatherAnimal weatherAnimal = new WeatherAnimal("weatherAnimal", weatherData);// Observer
     private Canvas canvas;
@@ -263,27 +263,29 @@ public class App extends Application {
         if (checkMenuItem.getText() == "Weather Plant") {
             if (checkMenuItem.isSelected()) {
                 weatherData.registerObserver(weatherPlant);
-                // weatherPlant.getWeatherPlantView().setVisible(true);
+                weatherPlant.getWeatherPlantView().setVisible(true);
             } else {
                 weatherData.removeObserver(weatherPlant);
-                // weatherPlant.getWeatherPlantView().setVisible(false);
+                weatherPlant.getWeatherPlantView().setVisible(false);
             }
         } else if (checkMenuItem.getText() == "Weather Animal") {
             if (checkMenuItem.isSelected()) {
                 weatherData.registerObserver(weatherAnimal);
-                // weatherAnimal.getWeatherAnimalView().setVisible(true);
+                weatherAnimal.getWeatherAnimalView().setVisible(true);
             } else {
                 weatherData.removeObserver(weatherAnimal);
-                // weatherAnimal.getWeatherAnimalView().setVisible(false);
+                weatherAnimal.getWeatherAnimalView().setVisible(false);
             }
         } else if (checkMenuItem.getText() == "Weather Station") {
             if (checkMenuItem.isSelected()) {
                 weatherData.registerObserver(weatherStation);
-
+                canvas.setVisible(true);
             } else {
                 weatherData.removeObserver(weatherStation);
+                canvas.setVisible(false);
             }
         }
+
     }
 
     public void displayWeatherConfirmation(String weather) {

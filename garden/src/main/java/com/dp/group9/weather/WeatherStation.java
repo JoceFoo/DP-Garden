@@ -41,6 +41,7 @@ public class WeatherStation implements Observer {
             isSnowyWeather = weather.equals("Snowy");
             isWindyWeather = weather.equals("Windy");
             isStormyWeather = weather.equals("Stormy");
+            drawWeather();
         } else {
             isSunnyWeather = false;
             isRainyWeather = false;
@@ -184,6 +185,12 @@ public class WeatherStation implements Observer {
                     }
                 }
             }
+        } else {
+            gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+            // droplets.clear();
+            // snowflakes.clear();
+            // leaves.clear();
+            // lightningFlashes.clear();
         }
     }
 }
