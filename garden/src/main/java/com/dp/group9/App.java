@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuButton;
@@ -64,8 +65,8 @@ public class App extends Application {
     private WeatherData weatherData = new WeatherData();// Subject
     private WeatherStation weatherStation;// Observer
 
-    WeatherPlant weatherPlant = new WeatherPlant("weatherPlant");// Observer
-    WeatherAnimal weatherAnimal = new WeatherAnimal("weatherAnimal");// Observer
+    WeatherPlant weatherPlant = new WeatherPlant("weatherPlant", weatherData);// Observer
+    WeatherAnimal weatherAnimal = new WeatherAnimal("weatherAnimal", weatherData);// Observer
     private Canvas canvas;
     private GraphicsContext gc;
 
@@ -83,8 +84,6 @@ public class App extends Application {
         Scene scene = new Scene(root, 1000, 750); // maintain 4:3 (width to height) ratio
         GardenLayout gardenLayout = GardenLayout.getInstance();
         gardenLayout.setLayout(LayoutType.GARDEN.getLayoutName(), root);
-        weatherData.registerObserver(weatherPlant);
-        weatherData.registerObserver(weatherAnimal);
         weatherStation = new WeatherStation(gc, weatherData);
         // Add Playground
         addPlayground(gardenLayout.getLayoutName(), root);
@@ -201,10 +200,21 @@ public class App extends Application {
         weatherButton.setLayoutX(grassButton.getLayoutX() + grassButton.getWidth() + 90);// beside the grass button
         weatherButton.setLayoutY(10);
         weatherButton.setOnAction(e -> showWeatherDialog());
+        MenuButton observerMenuButton = new MenuButton("Observer Options");
+        observerMenuButton.setLayoutX(weatherButton.getLayoutX() + weatherButton.getWidth() + 120);
+        observerMenuButton.setLayoutY(10);
+
+        // Modify this section to initialize menu items as selected
+        CheckMenuItem weatherPlantItem = createObserverMenuItem("Weather Plant");
+        CheckMenuItem weatherAnimalItem = createObserverMenuItem("Weather Animal");
+        CheckMenuItem weatherStationItem = createObserverMenuItem("Weather Station");
+
+        observerMenuButton.getItems().addAll(weatherPlantItem, weatherAnimalItem, weatherStationItem);
 
         // add Buttons and get+show scene
         root.getChildren().addAll(layoutButton, treeButton, flowerButton,
-                grassButton, weatherButton, weatherPlant.getWeatherPlantView(), weatherAnimal.getWeatherAnimalView());
+                grassButton, weatherButton, observerMenuButton, weatherPlant.getWeatherPlantView(),
+                weatherAnimal.getWeatherAnimalView());
 
         stage.setTitle("Garden");
         stage.setScene(scene);
@@ -239,6 +249,40 @@ public class App extends Application {
             weatherStation.update(weather);
             weatherAnimal.update(weather);
             weatherPlant.update(weather);
+        }
+    }
+
+    private CheckMenuItem createObserverMenuItem(String text) {
+        CheckMenuItem checkMenuItem = new CheckMenuItem(text);
+        checkMenuItem.setOnAction(e -> handleObserverCheckbox(checkMenuItem));
+
+        return checkMenuItem;
+    }
+
+    private void handleObserverCheckbox(CheckMenuItem checkMenuItem) {
+        if (checkMenuItem.getText() == "Weather Plant") {
+            if (checkMenuItem.isSelected()) {
+                weatherData.registerObserver(weatherPlant);
+                // weatherPlant.getWeatherPlantView().setVisible(true);
+            } else {
+                weatherData.removeObserver(weatherPlant);
+                // weatherPlant.getWeatherPlantView().setVisible(false);
+            }
+        } else if (checkMenuItem.getText() == "Weather Animal") {
+            if (checkMenuItem.isSelected()) {
+                weatherData.registerObserver(weatherAnimal);
+                // weatherAnimal.getWeatherAnimalView().setVisible(true);
+            } else {
+                weatherData.removeObserver(weatherAnimal);
+                // weatherAnimal.getWeatherAnimalView().setVisible(false);
+            }
+        } else if (checkMenuItem.getText() == "Weather Station") {
+            if (checkMenuItem.isSelected()) {
+                weatherData.registerObserver(weatherStation);
+
+            } else {
+                weatherData.removeObserver(weatherStation);
+            }
         }
     }
 
