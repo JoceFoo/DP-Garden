@@ -6,16 +6,18 @@ import javafx.scene.image.ImageView;
 public class WeatherPlant implements Observer {
     private String weatherPlantName;
     private ImageView weatherPlantView;
+    private WeatherData weatherData;
     private boolean isSunnyWeather;
     private boolean isRainyWeather;
     private boolean isSnowyWeather;
     private boolean isWindyWeather;
     private boolean isStormyWeather;
 
-    public WeatherPlant(String weatherPlantName) {
+    public WeatherPlant(String weatherPlantName, WeatherData weatherData) {
         this.weatherPlantName = weatherPlantName;
         this.weatherPlantView = new ImageView();
-        // setDefaultImage();
+        this.weatherData = weatherData;
+        // weatherData.registerObserver(this);
     }
 
     public ImageView getWeatherPlantView() {
@@ -56,12 +58,20 @@ public class WeatherPlant implements Observer {
 
     @Override
     public void update(String weather) {
-        isSunnyWeather = weather.equals("Sunny");
-        isRainyWeather = weather.equals("Rainy");
-        isSnowyWeather = weather.equals("Snowy");
-        isWindyWeather = weather.equals("Windy");
-        isStormyWeather = weather.equals("Stormy");
-        placePlant();
+        if (weatherData.getObservers().contains(this)) {
+            isSunnyWeather = weather.equals("Sunny");
+            isRainyWeather = weather.equals("Rainy");
+            isSnowyWeather = weather.equals("Snowy");
+            isWindyWeather = weather.equals("Windy");
+            isStormyWeather = weather.equals("Stormy");
+            placePlant();
+        } else {
+            isSunnyWeather = false;
+            isRainyWeather = false;
+            isSnowyWeather = false;
+            isWindyWeather = false;
+            isStormyWeather = false;
+        }
     }
 
     public void placePlant() {

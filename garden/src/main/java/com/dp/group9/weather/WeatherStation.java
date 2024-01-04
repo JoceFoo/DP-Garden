@@ -19,6 +19,7 @@ public class WeatherStation implements Observer {
     private List<Leaf> leaves = new ArrayList<>();
     private List<Lightning> lightningFlashes = new ArrayList<>();
     private GraphicsContext gc;
+    private WeatherData weatherData;
     private boolean isSunnyWeather;
     private boolean isRainyWeather;
     private boolean isSnowyWeather;
@@ -27,17 +28,26 @@ public class WeatherStation implements Observer {
 
     public WeatherStation(GraphicsContext gc, WeatherData weatherData) {
         this.gc = gc;
-        weatherData.registerObserver(this);
+        this.weatherData = weatherData;
+        // weatherData.registerObserver(this);
         initializeWeatherElements();
     }
 
     @Override
     public void update(String weather) {
-        isSunnyWeather = weather.equals("Sunny");
-        isRainyWeather = weather.equals("Rainy");
-        isSnowyWeather = weather.equals("Snowy");
-        isWindyWeather = weather.equals("Windy");
-        isStormyWeather = weather.equals("Stormy");
+        if (weatherData.getObservers().contains(this)) {
+            isSunnyWeather = weather.equals("Sunny");
+            isRainyWeather = weather.equals("Rainy");
+            isSnowyWeather = weather.equals("Snowy");
+            isWindyWeather = weather.equals("Windy");
+            isStormyWeather = weather.equals("Stormy");
+        } else {
+            isSunnyWeather = false;
+            isRainyWeather = false;
+            isSnowyWeather = false;
+            isWindyWeather = false;
+            isStormyWeather = false;
+        }
     }
 
     private static class Droplet {
