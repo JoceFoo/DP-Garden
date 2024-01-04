@@ -64,7 +64,7 @@ public class App extends Application {
 
     private WeatherData weatherData = new WeatherData();// Subject
     private WeatherStation weatherStation;// Observer
-    private AnimationTimer animationTimer;
+
     WeatherPlant weatherPlant = new WeatherPlant("weatherPlant", weatherData);// Observer
     WeatherAnimal weatherAnimal = new WeatherAnimal("weatherAnimal", weatherData);// Observer
     private Canvas canvas;

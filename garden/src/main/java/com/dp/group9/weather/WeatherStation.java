@@ -187,10 +187,6 @@ public class WeatherStation implements Observer {
             }
         } else {
             gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
-            // droplets.clear();
-            // snowflakes.clear();
-            // leaves.clear();
-            // lightningFlashes.clear();
         }
     }
 }
