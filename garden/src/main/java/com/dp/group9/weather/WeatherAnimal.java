@@ -17,7 +17,7 @@ public class WeatherAnimal implements Observer {
         this.weatherAnimalName = weatherAnimalName;
         this.weatherAnimalView = new ImageView();
         this.weatherData = weatherData;
-        // weatherData.registerObserver(this);
+        weatherData.registerObserver(this);
     }
 
     public ImageView getWeatherAnimalView() {

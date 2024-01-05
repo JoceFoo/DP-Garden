@@ -206,8 +206,11 @@ public class App extends Application {
 
         // Modify this section to initialize menu items as selected
         CheckMenuItem weatherPlantItem = createObserverMenuItem("Weather Plant");
+        weatherPlantItem.setSelected(true);
         CheckMenuItem weatherAnimalItem = createObserverMenuItem("Weather Animal");
+        weatherAnimalItem.setSelected(true);
         CheckMenuItem weatherStationItem = createObserverMenuItem("Weather Station");
+        weatherStationItem.setSelected(true);
 
         observerMenuButton.getItems().addAll(weatherPlantItem, weatherAnimalItem, weatherStationItem);
 
@@ -263,26 +266,26 @@ public class App extends Application {
         if (checkMenuItem.getText() == "Weather Plant") {
             if (checkMenuItem.isSelected()) {
                 weatherData.registerObserver(weatherPlant);
-                weatherPlant.getWeatherPlantView().setVisible(true);
+                // weatherPlant.getWeatherPlantView().setVisible(true);
             } else {
                 weatherData.removeObserver(weatherPlant);
-                weatherPlant.getWeatherPlantView().setVisible(false);
+                // weatherPlant.getWeatherPlantView().setVisible(false);
             }
         } else if (checkMenuItem.getText() == "Weather Animal") {
             if (checkMenuItem.isSelected()) {
                 weatherData.registerObserver(weatherAnimal);
-                weatherAnimal.getWeatherAnimalView().setVisible(true);
+                // weatherAnimal.getWeatherAnimalView().setVisible(true);
             } else {
                 weatherData.removeObserver(weatherAnimal);
-                weatherAnimal.getWeatherAnimalView().setVisible(false);
+                // weatherAnimal.getWeatherAnimalView().setVisible(false);
             }
         } else if (checkMenuItem.getText() == "Weather Station") {
             if (checkMenuItem.isSelected()) {
                 weatherData.registerObserver(weatherStation);
-                canvas.setVisible(true);
+                // canvas.setVisible(true);
             } else {
                 weatherData.removeObserver(weatherStation);
-                canvas.setVisible(false);
+                // canvas.setVisible(false);
             }
         }
 

@@ -17,7 +17,7 @@ public class WeatherPlant implements Observer {
         this.weatherPlantName = weatherPlantName;
         this.weatherPlantView = new ImageView();
         this.weatherData = weatherData;
-        // weatherData.registerObserver(this);
+        weatherData.registerObserver(this);
     }
 
     public ImageView getWeatherPlantView() {

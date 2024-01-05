@@ -29,7 +29,7 @@ public class WeatherStation implements Observer {
     public WeatherStation(GraphicsContext gc, WeatherData weatherData) {
         this.gc = gc;
         this.weatherData = weatherData;
-        // weatherData.registerObserver(this);
+        weatherData.registerObserver(this);
         initializeWeatherElements();
     }
 
