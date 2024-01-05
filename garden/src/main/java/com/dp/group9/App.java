@@ -257,8 +257,8 @@ public class App extends Application {
         }
     }
 
-    private CheckMenuItem createObserverMenuItem(String text) {
-        CheckMenuItem checkMenuItem = new CheckMenuItem(text);
+    private CheckMenuItem createObserverMenuItem(String weather) {
+        CheckMenuItem checkMenuItem = new CheckMenuItem(weather);
         checkMenuItem.setOnAction(e -> handleObserverCheckbox(checkMenuItem));
 
         return checkMenuItem;
