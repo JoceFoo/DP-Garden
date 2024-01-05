@@ -246,12 +246,14 @@ public class App extends Application {
         Optional<String> selectedWeather = weatherDialog.showAndWait();
         if (selectedWeather.isPresent()) {
             String weather = selectedWeather.get();
-            lastSelectedWeather = weather;
-            weatherData.setWeather(weather);
-            weatherData.notifyObservers();
-            weatherStation.update(weather);
-            weatherAnimal.update(weather);
-            weatherPlant.update(weather);
+            if (!weather.equals(lastSelectedWeather)) {
+                lastSelectedWeather = weather;
+                weatherData.setWeather(weather);
+                weatherData.notifyObservers();
+                weatherStation.update(weather);
+                weatherAnimal.update(weather);
+                weatherPlant.update(weather);
+            }
         }
     }
 
