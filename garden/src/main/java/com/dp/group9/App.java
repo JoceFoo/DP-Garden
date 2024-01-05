@@ -206,8 +206,11 @@ public class App extends Application {
 
         // Modify this section to initialize menu items as selected
         CheckMenuItem weatherPlantItem = createObserverMenuItem("Weather Plant");
+        weatherPlantItem.setSelected(true);
         CheckMenuItem weatherAnimalItem = createObserverMenuItem("Weather Animal");
+        weatherAnimalItem.setSelected(true);
         CheckMenuItem weatherStationItem = createObserverMenuItem("Weather Station");
+        weatherStationItem.setSelected(true);
 
         observerMenuButton.getItems().addAll(weatherPlantItem, weatherAnimalItem, weatherStationItem);
 
@@ -243,17 +246,19 @@ public class App extends Application {
         Optional<String> selectedWeather = weatherDialog.showAndWait();
         if (selectedWeather.isPresent()) {
             String weather = selectedWeather.get();
-            lastSelectedWeather = weather;
-            weatherData.setWeather(weather);
-            weatherData.notifyObservers();
-            weatherStation.update(weather);
-            weatherAnimal.update(weather);
-            weatherPlant.update(weather);
+            if (!weather.equals(lastSelectedWeather)) {
+                lastSelectedWeather = weather;
+                weatherData.setWeather(weather);
+                weatherData.notifyObservers();
+                weatherStation.update(weather);
+                weatherAnimal.update(weather);
+                weatherPlant.update(weather);
+            }
         }
     }
 
-    private CheckMenuItem createObserverMenuItem(String text) {
-        CheckMenuItem checkMenuItem = new CheckMenuItem(text);
+    private CheckMenuItem createObserverMenuItem(String weather) {
+        CheckMenuItem checkMenuItem = new CheckMenuItem(weather);
         checkMenuItem.setOnAction(e -> handleObserverCheckbox(checkMenuItem));
 
         return checkMenuItem;
@@ -279,11 +284,13 @@ public class App extends Application {
         } else if (checkMenuItem.getText() == "Weather Station") {
             if (checkMenuItem.isSelected()) {
                 weatherData.registerObserver(weatherStation);
-
+                // canvas.setVisible(true);
             } else {
                 weatherData.removeObserver(weatherStation);
+                // canvas.setVisible(false);
             }
         }
+
     }
 
     public void displayWeatherConfirmation(String weather) {

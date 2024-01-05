@@ -29,7 +29,7 @@ public class WeatherStation implements Observer {
     public WeatherStation(GraphicsContext gc, WeatherData weatherData) {
         this.gc = gc;
         this.weatherData = weatherData;
-        // weatherData.registerObserver(this);
+        weatherData.registerObserver(this);
         initializeWeatherElements();
     }
 
@@ -41,6 +41,7 @@ public class WeatherStation implements Observer {
             isSnowyWeather = weather.equals("Snowy");
             isWindyWeather = weather.equals("Windy");
             isStormyWeather = weather.equals("Stormy");
+            drawWeather();
         } else {
             isSunnyWeather = false;
             isRainyWeather = false;
@@ -184,6 +185,8 @@ public class WeatherStation implements Observer {
                     }
                 }
             }
+        } else {
+            gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         }
     }
 }

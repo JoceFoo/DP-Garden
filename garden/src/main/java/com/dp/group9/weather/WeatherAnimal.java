@@ -17,7 +17,7 @@ public class WeatherAnimal implements Observer {
         this.weatherAnimalName = weatherAnimalName;
         this.weatherAnimalView = new ImageView();
         this.weatherData = weatherData;
-        // weatherData.registerObserver(this);
+        weatherData.registerObserver(this);
     }
 
     public ImageView getWeatherAnimalView() {
@@ -29,12 +29,17 @@ public class WeatherAnimal implements Observer {
     }
 
     private void setImage(String imagePath) {
-        try {
-            Image image = new Image(getClass().getResourceAsStream(imagePath));
-            weatherAnimalView.setImage(image);
-        } catch (Exception e) {
-            // Handle image loading error
-            e.printStackTrace();
+        if (imagePath != null && !imagePath.isEmpty()) {
+            try {
+                Image image = new Image(getClass().getResourceAsStream(imagePath));
+                weatherAnimalView.setImage(image);
+            } catch (Exception e) {
+                // Handle image loading error
+                e.printStackTrace();
+            }
+        } else {
+            // Set to null or an empty image
+            weatherAnimalView.setImage(null);
         }
     }
 
@@ -71,6 +76,7 @@ public class WeatherAnimal implements Observer {
             isSnowyWeather = false;
             isWindyWeather = false;
             isStormyWeather = false;
+            setImage(null);
         }
     }
 

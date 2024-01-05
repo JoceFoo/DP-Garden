@@ -17,7 +17,7 @@ public class WeatherPlant implements Observer {
         this.weatherPlantName = weatherPlantName;
         this.weatherPlantView = new ImageView();
         this.weatherData = weatherData;
-        // weatherData.registerObserver(this);
+        weatherData.registerObserver(this);
     }
 
     public ImageView getWeatherPlantView() {
@@ -29,12 +29,17 @@ public class WeatherPlant implements Observer {
     }
 
     private void setImage(String imagePath) {
-        try {
-            Image image = new Image(getClass().getResourceAsStream(imagePath));
-            weatherPlantView.setImage(image);
-        } catch (Exception e) {
-            // Handle image loading error
-            e.printStackTrace();
+        if (imagePath != null && !imagePath.isEmpty()) {
+            try {
+                Image image = new Image(getClass().getResourceAsStream(imagePath));
+                weatherPlantView.setImage(image);
+            } catch (Exception e) {
+                // Handle image loading error
+                e.printStackTrace();
+            }
+        } else {
+            // Set to null or an empty image
+            weatherPlantView.setImage(null);
         }
     }
 
@@ -71,6 +76,7 @@ public class WeatherPlant implements Observer {
             isSnowyWeather = false;
             isWindyWeather = false;
             isStormyWeather = false;
+            setImage(null);
         }
     }
 
