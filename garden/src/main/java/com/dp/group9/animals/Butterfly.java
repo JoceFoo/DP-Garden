@@ -24,7 +24,8 @@ public class Butterfly implements Animal {
         return butterflyImageView;
     }
 
-    public void showAnimalImage() {
+    @Override
+    public void display() {
         try {
             Image butterfly = new Image(getClass().getResourceAsStream("/butterfly.png"));
             getImageView().setFitWidth(50);
@@ -33,11 +34,6 @@ public class Butterfly implements Animal {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void display() {
-        showAnimalImage();
     }
 
     @Override

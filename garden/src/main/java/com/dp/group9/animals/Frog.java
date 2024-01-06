@@ -1,10 +1,6 @@
 package com.dp.group9.animals;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,7 +21,8 @@ public class Frog implements Animal {
         return frogImageView;
     }
 
-    public void showAnimalImage() {
+    @Override
+    public void display() {
         try {
             Image frog = new Image(getClass().getResourceAsStream("/frog.png"));
             getImageView().setFitWidth(50);
@@ -34,11 +31,6 @@ public class Frog implements Animal {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void display() {
-        showAnimalImage();
     }
 
     @Override
@@ -53,7 +45,7 @@ public class Frog implements Animal {
         jumpUp.setByY(-50);
 
         TranslateTransition jumpDown = new TranslateTransition(Duration.seconds(0.5), imageView);
-        jumpDown.setByY(50); // Adjust the jump height as needed
+        jumpDown.setByY(50);
 
         jumpUp.setOnFinished(event -> jumpDown.play());
         jumpDown.setOnFinished(event -> {

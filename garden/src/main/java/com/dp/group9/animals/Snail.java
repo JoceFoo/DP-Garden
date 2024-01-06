@@ -24,7 +24,8 @@ public class Snail implements Animal {
         return snailImageView;
     }
 
-    public void showAnimalImage() {
+    @Override
+    public void display() {
         try {
             Image snail = new Image(getClass().getResourceAsStream("/snail.png"));
             getImageView().setFitWidth(50);
@@ -33,11 +34,6 @@ public class Snail implements Animal {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void display() {
-        showAnimalImage();
     }
 
     @Override
