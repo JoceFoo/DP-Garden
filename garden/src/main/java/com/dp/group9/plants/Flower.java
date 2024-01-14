@@ -27,7 +27,6 @@ public class Flower extends PlantDecorator{
 
     @Override
     public void display() {
-        plant.display();
         pane.getChildren().add(flowerView);
     }  
 }
