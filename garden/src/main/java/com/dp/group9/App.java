@@ -371,23 +371,29 @@ public class App extends Application {
     }
 
     private void addFlower(Pane pane) {
-        Random random = new Random();
         Flower flower = new Flower(simplePlant, pane);
+        Flower flower2 = new Flower(simplePlant, pane);
 
-        flower.getView().setLayoutX(random.nextDouble() * (pane.getWidth() - flower.getView().getFitWidth()));
+        flower.getView().setLayoutX(pane.getWidth() - flower.getView().getFitWidth());
         flower.getView().setLayoutY(pane.getHeight() - flower.getView().getFitHeight());
-
         flower.display();
+
+        flower2.getView().setLayoutX(0);
+        flower2.getView().setLayoutY(pane.getHeight() - flower.getView().getFitHeight());
+        flower2.display();
     }
 
     private void addGrass(Pane pane) {
-        Random random = new Random();
         Grass grass = new Grass(simplePlant, pane);
+        Grass grass2 = new Grass(simplePlant, pane);
 
-        grass.getView().setLayoutX(random.nextDouble() * (pane.getWidth() - grass.getView().getFitWidth()));
+        grass.getView().setLayoutX(pane.getWidth() - grass.getView().getFitWidth());
         grass.getView().setLayoutY(pane.getHeight() - grass.getView().getFitHeight());
-
         grass.display();
+        
+        grass2.getView().setLayoutX(0);
+        grass2.getView().setLayoutY(pane.getHeight() - grass.getView().getFitHeight());
+        grass2.display();
     }
 
     private void handleAnimalSelection(ComboBox<String> animalComboBox) {
