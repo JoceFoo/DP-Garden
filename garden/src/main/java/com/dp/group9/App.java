@@ -61,6 +61,7 @@ public class App extends Application {
     private Animal butterfly;
     private Animal snail;
     private Animal frog;
+    private Plant simplePlant;
 
     private WeatherData weatherData = new WeatherData();// Subject
     private WeatherStation weatherStation;// Observer
@@ -85,6 +86,8 @@ public class App extends Application {
         GardenLayout gardenLayout = GardenLayout.getInstance();
         gardenLayout.setLayout(LayoutType.GARDEN.getLayoutName(), root);
         weatherStation = new WeatherStation(gc, weatherData);
+        simplePlant = new SimplePlant();
+
         // Add Playground
         addPlayground(gardenLayout.getLayoutName(), root);
 
@@ -330,9 +333,7 @@ public class App extends Application {
 
     private void addTree(String layoutType, Pane pane) {
         Random random = new Random();
-
-        Plant plant = new SimplePlant();
-        Tree tree = new Tree(plant, pane);
+        Tree tree = new Tree(simplePlant, pane);
         double start = pane.getWidth() / 3;
         double end = 2 * start;
         double randomX = 0.00;
@@ -371,9 +372,7 @@ public class App extends Application {
 
     private void addFlower(Pane pane) {
         Random random = new Random();
-
-        Plant plant = new SimplePlant();
-        Flower flower = new Flower(plant, pane);
+        Flower flower = new Flower(simplePlant, pane);
 
         flower.getView().setLayoutX(random.nextDouble() * (pane.getWidth() - flower.getView().getFitWidth()));
         flower.getView().setLayoutY(pane.getHeight() - flower.getView().getFitHeight());
@@ -383,9 +382,7 @@ public class App extends Application {
 
     private void addGrass(Pane pane) {
         Random random = new Random();
-
-        Plant plant = new SimplePlant();
-        Grass grass = new Grass(plant, pane);
+        Grass grass = new Grass(simplePlant, pane);
 
         grass.getView().setLayoutX(random.nextDouble() * (pane.getWidth() - grass.getView().getFitWidth()));
         grass.getView().setLayoutY(pane.getHeight() - grass.getView().getFitHeight());

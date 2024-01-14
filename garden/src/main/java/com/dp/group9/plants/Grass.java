@@ -27,6 +27,7 @@ public class Grass extends PlantDecorator {
 
     @Override
     public void display() {
+        plant.display();
         pane.getChildren().add(grassView);
     }
 }
